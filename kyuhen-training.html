@@ -1,0 +1,1396 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+<title>院内急変対応トレーニング</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+  :root{
+    --bg:#F5F3F3;
+    --surface:#FFFFFF;
+    --surface-2:#EFE9E9;
+    --ink:#211416;
+    --ink-soft:#5B4448;
+    --ink-faint:#5C5254;
+    --line:#E2D6D8;
+    --primary:#8C1F3F;
+    --primary-strong:#611530;
+    --primary-tint:#F7E2E9;
+    --accent:#9C5E12;
+    --accent-tint:#FBEDDA;
+    --good:#2E7D4F;
+    --good-tint:#E4F3EA;
+    --warn:#9C5E12;
+    --warn-tint:#FBEDDA;
+    --bad:#B23A3A;
+    --bad-tint:#FBE7E5;
+    --shadow: 0 1px 2px rgba(33,20,22,.06), 0 6px 20px rgba(33,20,22,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1A0E12;
+      --surface:#271217;
+      --surface-2:#33191F;
+      --ink:#F7EAEC;
+      --ink-soft:#D6B6BE;
+      --ink-faint:#B4909A;
+      --line:#4A2530;
+      --primary:#E893A8;
+      --primary-strong:#F2B8C6;
+      --primary-tint:#2E1420;
+      --accent:#E3A45D;
+      --accent-tint:#33260F;
+      --good:#6FC796;
+      --good-tint:#16301F;
+      --warn:#E3A45D;
+      --warn-tint:#33260F;
+      --bad:#E27C7C;
+      --bad-tint:#3A1B1B;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1A0E12;
+    --surface:#271217;
+    --surface-2:#33191F;
+    --ink:#F7EAEC;
+    --ink-soft:#D6B6BE;
+    --ink-faint:#B4909A;
+    --line:#4A2530;
+    --primary:#E893A8;
+    --primary-strong:#F2B8C6;
+    --primary-tint:#2E1420;
+    --accent:#E3A45D;
+    --accent-tint:#33260F;
+    --good:#6FC796;
+    --good-tint:#16301F;
+    --warn:#E3A45D;
+    --warn-tint:#33260F;
+    --bad:#E27C7C;
+    --bad-tint:#3A1B1B;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"BIZ UDPGothic","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.65;
+  }
+  h1,h2,h3,.disp{
+    font-family:"Zen Kaku Gothic New","BIZ UDPGothic",system-ui,sans-serif;
+    text-wrap:balance;
+    margin:0;
+  }
+  #app{
+    max-width:520px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:var(--bg);
+  }
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    padding:14px 18px 12px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .topbar .back{
+    appearance:none; border:none; background:transparent; color:var(--primary);
+    font-size:15px; font-weight:700; cursor:pointer; padding:6px 8px 6px 0;
+    display:flex; align-items:center; gap:2px; min-height:44px;
+    font-family:inherit;
+  }
+  .topbar .title{
+    font-size:15px; font-weight:700; color:var(--ink-soft);
+    letter-spacing:.02em;
+    flex:1;
+    text-align:center;
+    margin-right:34px;
+  }
+  main{flex:1; padding:0 18px 48px;}
+
+  /* ---------- HOME ---------- */
+  .hero{ padding:28px 4px 18px; }
+  .hero .eyebrow{
+    font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--primary);
+    text-transform:uppercase;
+  }
+  .hero h1{ font-size:25px; font-weight:900; color:var(--ink); margin-top:8px; line-height:1.4; }
+  .hero p{ color:var(--ink-soft); font-size:14px; margin-top:10px; max-width:44ch; }
+
+  .progress-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:16px 18px; margin:14px 0 8px; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:16px;
+  }
+  .progress-text{flex:1;}
+  .progress-text .num{font-size:13px; font-weight:700; color:var(--ink);}
+  .progress-text .sub{font-size:12.5px; color:var(--ink-faint); margin-top:2px;}
+  .review-pill-btn{
+    appearance:none; border:1px solid var(--warn); background:var(--warn-tint); color:var(--warn);
+    font-weight:700; font-size:12.5px; padding:8px 14px; border-radius:999px; cursor:pointer;
+    white-space:nowrap; font-family:inherit;
+    min-height:44px; display:inline-flex; align-items:center;
+  }
+
+  .principles-cta{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:var(--primary-tint); border:1px solid var(--primary); border-radius:16px;
+    padding:14px 18px; margin:10px 0 24px; cursor:pointer;
+    width:100%; text-align:left; font-family:inherit; appearance:none;
+  }
+  .principles-cta .t{display:block; font-size:14px; font-weight:700; color:var(--primary-strong);}
+  .principles-cta .s{display:block; font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .principles-cta .arrow{color:var(--primary-strong); font-size:18px; flex:none;}
+
+  .section-head{ display:flex; align-items:baseline; gap:8px; margin:26px 0 12px; }
+  .section-head h2{font-size:15px; font-weight:700; color:var(--ink);}
+  .section-head .count{font-size:12px; color:var(--ink-faint); font-weight:400;}
+
+  .case-grid{ display:flex; flex-direction:column; gap:10px; }
+  .case-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:14px 14px; cursor:pointer; text-align:left; width:100%;
+    box-shadow:var(--shadow); font-family:inherit;
+    appearance:none;
+  }
+  .case-card:active{ transform:scale(.99); }
+  .case-num{
+    font-family:"Zen Kaku Gothic New",sans-serif; font-weight:900; font-size:13px;
+    color:var(--ink-faint); width:26px; flex:none; font-variant-numeric:tabular-nums;
+  }
+  .case-body{flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;}
+  .case-body .tag{ font-size:11px; font-weight:700; color:var(--primary); }
+  .case-body .hint{
+    font-size:14px; font-weight:600; color:var(--ink); line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .status-chip{
+    flex:none; align-self:flex-start; font-size:11.5px; font-weight:700; padding:5px 10px; border-radius:999px;
+    white-space:nowrap;
+  }
+  .status-chip.none{ background:var(--surface-2); color:var(--ink-faint); }
+  .status-chip.good{ background:var(--good-tint); color:var(--good); }
+  .status-chip.partial{ background:var(--warn-tint); color:var(--warn); }
+  .status-chip.poor{ background:var(--bad-tint); color:var(--bad); }
+
+  .empty-review{ text-align:center; padding:40px 20px; color:var(--ink-faint); font-size:14px; }
+
+  /* ---------- CASE VIEW ---------- */
+  .case-hero{ padding:22px 0 4px; }
+  .case-hero .tag{ font-size:12px; font-weight:700; color:var(--primary); letter-spacing:.08em; text-transform:uppercase;}
+  .case-hero h1{ font-size:20px; font-weight:900; margin-top:8px; }
+  .vignette{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:18px 20px; margin-top:16px; box-shadow:var(--shadow); font-size:14.5px; color:var(--ink);
+  }
+  .vitals-line{
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);
+    font-size:13px; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+  }
+  .vitals-line b{color:var(--ink); font-weight:700;}
+
+  .prompt-block{ margin-top:22px; }
+  .prompt-block label{
+    display:block; font-size:13.5px; font-weight:700; color:var(--ink); margin-bottom:8px; line-height:1.5;
+  }
+  .prompt-block label .n{ color:var(--primary); margin-right:6px; }
+  .prompt-block .q-focus{ font-size:11.5px; color:var(--ink-faint); margin:-2px 0 8px; line-height:1.5; }
+  .prompt-block textarea{
+    width:100%; min-height:88px; resize:vertical; border-radius:12px;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    padding:12px 14px; font-family:inherit; font-size:16px; line-height:1.6;
+  }
+  .prompt-block textarea:focus{ outline:2px solid var(--primary); outline-offset:1px; }
+  .prompt-block textarea::placeholder{ color:var(--ink-faint); }
+
+  .reveal-btn{
+    width:100%; margin-top:24px; appearance:none; border:none; cursor:pointer;
+    background:var(--primary); color:#fff; font-weight:700; font-size:15px;
+    padding:15px; border-radius:14px; font-family:inherit;
+    box-shadow:0 4px 14px rgba(140,31,63,.28);
+    min-height:44px;
+  }
+  .reveal-btn:active{ transform:scale(.99); }
+
+  .answer-wrap{ margin-top:28px; }
+
+  .answer-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:18px 20px; margin-bottom:12px; box-shadow:var(--shadow);
+  }
+  .answer-card h3{
+    font-size:13.5px; font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .answer-card h3 .ico{
+    width:22px;height:22px;border-radius:7px;flex:none; display:flex;align-items:center;justify-content:center;
+    font-size:12px; font-weight:900; color:#fff;
+  }
+  .ico.check{background:var(--primary);}
+  .ico.sum{background:var(--accent);}
+  .answer-card ul{ margin:0; padding-left:20px; font-size:14px; color:var(--ink); }
+  .answer-card li{ margin-bottom:6px; }
+  .answer-card li:last-child{ margin-bottom:0; }
+  mark{
+    background:var(--accent-tint); color:var(--accent); padding:1px 5px; border-radius:5px;
+    font-weight:700; box-decoration-break:clone; -webkit-box-decoration-break:clone;
+  }
+  .mistake-box{
+    margin-top:12px; padding:10px 14px; border-radius:10px;
+    background:var(--bad-tint); color:var(--bad); font-size:12.5px; line-height:1.6;
+  }
+  .mistake-box b{ display:block; font-size:11.5px; font-weight:700; margin-bottom:4px; letter-spacing:.04em; }
+  .mistake-box ul{ margin:0; padding-left:18px; color:var(--bad); }
+  .refs-box{
+    margin-top:14px; padding-top:12px; border-top:1px dashed var(--line);
+    font-size:12px; color:var(--ink-faint);
+  }
+  .refs-box b{ display:block; font-size:11px; font-weight:700; color:var(--ink-faint); margin-bottom:6px; letter-spacing:.04em; }
+  .refs-box ol{ margin:0; padding-left:18px; color:var(--ink-faint); }
+  .refs-box li{ margin-bottom:6px; line-height:1.55; }
+  .refs-box li:last-child{ margin-bottom:0; }
+  .refs-box .ref-source{ color:var(--ink-faint); }
+  .refs-box a{ color:var(--ink-soft); word-break:break-all; }
+
+  .assess-block{ margin-top:26px; }
+  .assess-block .q{ font-size:14px; font-weight:700; margin-bottom:12px; text-align:center; }
+  .assess-row{ display:flex; gap:8px; }
+  .assess-btn{
+    flex:1; appearance:none; cursor:pointer; border-radius:12px; padding:13px 6px;
+    font-family:inherit; font-size:12.5px; font-weight:700; line-height:1.4;
+    border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft);
+    min-height:44px;
+  }
+  .assess-btn.good{ border-color:var(--good); }
+  .assess-btn.partial{ border-color:var(--warn); }
+  .assess-btn.poor{ border-color:var(--bad); }
+  .assess-btn.good.active{ background:var(--good); color:#fff; }
+  .assess-btn.partial.active{ background:var(--warn); color:#fff; }
+  .assess-btn.poor.active{ background:var(--bad); color:#fff; }
+  .save-warning{
+    margin-top:12px; padding:10px 14px; border-radius:10px;
+    background:var(--bad-tint); color:var(--bad); font-size:12.5px; font-weight:600; line-height:1.5;
+  }
+
+  .after-assess{
+    margin-top:22px; display:flex; flex-direction:column; gap:10px;
+    animation:fadein .3s ease;
+  }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .nav-btn{
+    appearance:none; border:none; cursor:pointer; border-radius:12px; padding:14px;
+    font-family:inherit; font-size:14.5px; font-weight:700; text-align:center;
+    min-height:44px;
+  }
+  .nav-btn.primary{ background:var(--primary); color:#fff; }
+  .nav-btn.ghost{ background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--line); }
+
+  /* ---------- PRINCIPLES VIEW ---------- */
+  .principles-hero{ padding:24px 0 6px; }
+  .principles-hero .eyebrow{ font-size:12px; font-weight:700; color:var(--primary); letter-spacing:.1em; text-transform:uppercase;}
+  .principles-hero h1{ font-size:21px; font-weight:900; margin-top:8px; }
+  .principles-hero p{ font-size:13.5px; color:var(--ink-soft); margin-top:8px; }
+
+  .escalation-note{
+    margin-top:18px; padding:16px 18px; border-radius:14px;
+    background:var(--accent-tint); border:1.5px solid var(--accent);
+  }
+  .escalation-note .en-label{
+    font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--accent); text-transform:uppercase;
+  }
+  .escalation-note .en-body{ font-size:13.5px; color:var(--ink); margin-top:6px; line-height:1.6; }
+  .escalation-note .en-body ul{ margin:6px 0 0; padding-left:18px; }
+  .escalation-note .en-body li{ margin-bottom:4px; }
+
+  .flow{ margin-top:22px; position:relative; }
+  .flow-step{ display:flex; gap:14px; position:relative; padding-bottom:22px; }
+  .flow-step:last-child{ padding-bottom:0; }
+  .flow-step .rail{ display:flex; flex-direction:column; align-items:center; flex:none; }
+  .flow-step .node{
+    width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px;
+    font-family:"Zen Kaku Gothic New",sans-serif; flex:none; z-index:1;
+  }
+  .flow-step .stem{ width:2px; flex:1; background:var(--line); margin-top:2px; }
+  .flow-step .content{ flex:1; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow); margin-top:1px;}
+  .flow-step .content h3{ font-size:14.5px; font-weight:700; }
+  .flow-step .content p{ font-size:13px; color:var(--ink-soft); margin-top:5px; }
+
+  .principles-foot{
+    margin-top:26px; padding:16px 18px; background:var(--primary-tint); border-radius:14px;
+    font-size:13px; color:var(--primary-strong); text-align:center; font-weight:700;
+  }
+
+  a{color:var(--primary);}
+  button:focus-visible, textarea:focus-visible, .case-card:focus-visible{
+    outline:2px solid var(--primary); outline-offset:2px;
+  }
+
+  @media (hover:hover){
+    .case-card:hover{ border-color:var(--primary); }
+    .principles-cta:hover{ background:var(--primary-tint); filter:brightness(0.97); }
+    .review-pill-btn:hover{ filter:brightness(0.95); }
+    .reveal-btn:hover{ filter:brightness(1.08); }
+    .assess-btn:hover{ border-color:var(--primary); }
+    .nav-btn.primary:hover{ filter:brightness(1.08); }
+    .nav-btn.ghost:hover{ border-color:var(--primary); }
+    .topbar .back:hover{ text-decoration:underline; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CASES = [
+    {
+      id:"sepsis", num:1, tag:"敗血症性ショック",
+      hint:"78歳女性・肺炎治療中・突然の血圧低下と反応の鈍さ",
+      vignette:"78歳女性。市中肺炎の診断で一般病棟に入院し抗菌薬治療中。入院3日目の夜、担当看護師から「反応が鈍く、血圧が下がっている」と報告があった。訪室すると、患者は呼びかけに開眼するが会話は要領を得ず、四肢末梢は冷たく湿潤している。",
+      data:"BP 78/44　HR 128　RR 28　SpO2 89%(room air)　T 38.9℃　意識:呼びかけに開眼するが受け答え混乱／皮膚:冷汗・網状皮斑／尿量:直近4時間でごく少量",
+      questions:[
+        {
+          q:"訪室し「様子がおかしい」と第一印象で感じた。まず何をすべきか、具体的に述べよ。",
+          focus:"初動(応援要請を含む) ・ 一人で抱え込まないこと",
+          answer:[
+            "一人で抱え込まず、直ちに応援(担当看護師に加え当直医・上級医)を要請する。異常の第一発見者がその場を離れて応援を呼びに行く場合も、できるだけ短時間で戻る",
+            "応援を待つ間もモニター装着・酸素投与の準備を進め、バイタルサインの再測定を続ける",
+            "<mark>日本集中治療医学会のRapid Response System(RRS)運用指針が示す代表的な起動基準</mark>には、呼吸数9回/分以下または30回/分以上、SpO2 92%以下、心拍数40回/分未満または130回/分以上、収縮期血圧90mmHg以下または200mmHg以上、急激な意識レベルの低下などがある。本症例は<mark>収縮期血圧78mmHg(90以下に該当)と意識変容</mark>があり、院内の緊急コール/RRSの起動基準を満たす状態と判断できる"
+          ],
+          mistakes:["「もう少し様子を見てから」と一人で抱え込み、応援要請が遅れる","上級医への報告を「状態がもう少しはっきりしてから」と先延ばしにする"]
+        },
+        {
+          q:"ABCDEアプローチで、この患者のどこに異常があり、それぞれに直ちに行うべき対応は何か。",
+          focus:"A〜Eの評価項目 ・ 各異常への初期対応",
+          answer:[
+            "<mark>A(気道)</mark>:発語はできており気道開通と判断できるが、今後の意識変容の進行による誤嚥・気道閉塞リスクを念頭に置き繰り返し確認する",
+            "<mark>B(呼吸)</mark>:RR28・SpO2 89%と頻呼吸・低酸素を認める。直ちに酸素投与を開始し、目標SpO2 94%以上を確認する",
+            "<mark>C(循環)</mark>:BP78/44・HR128・冷汗・網状皮斑は低灌流を示す所見。モニターを装着し静脈路を確保して採血(血液培養2セットを含む)を行い、輸液を開始する",
+            "<mark>D(意識)</mark>:意識変容の原因として低灌流・低酸素に加え、<mark>血糖を必ず測定する</mark>",
+            "<mark>E(全身)</mark>:新規の感染巣(カテーテル刺入部など)や皮疹・出血がないか全身を観察する"
+          ],
+          mistakes:["SpO2の値だけを見て「酸素投与すれば十分」と判断し、呼吸数のトレンドや努力呼吸の有無を確認しない","意識変容の原因を「もともとの肺炎のせい」と決めつけ、血糖測定を省略する"]
+        },
+        {
+          q:"このバイタル変化から考えるべき病態は何か。原因検索としてどのような検査・測定を進めるか。",
+          focus:"敗血症を疑う根拠 ・ qSOFAの位置づけ ・ 進めるべき検査",
+          answer:[
+            "肺炎治療中の患者における急激な血圧低下・意識変容・頻呼吸・頻脈は<mark>敗血症性ショック</mark>を積極的に疑う所見",
+            "<mark>qSOFA(呼吸数≧22/分、収縮期血圧≦100mmHg、意識変容)</mark>の3項目すべてに該当しており、感染症を背景とした重篤な状態を強く示唆する",
+            "ただし<mark>日本版敗血症診療ガイドライン2024(J-SSCG2024)はqSOFA単独でのスクリーニングは感度が不十分であるとして推奨しておらず</mark>、乳酸値など他の指標と組み合わせて評価する方針が示されている",
+            "動脈血液ガス分析(<mark>乳酸値を含む</mark>)、血算・生化学・凝固能、<mark>血液培養2セット以上</mark>、胸部X線、必要に応じて他の感染巣検索(尿・カテーテル刺入部など)を、抗菌薬投与を遅らせない範囲で並行して行う"
+          ],
+          mistakes:["qSOFAが陽性であることのみで「敗血症性ショック確定」と判断し、乳酸値など他の指標での裏付けをとらない","培養検体の採取にこだわりすぎて、抗菌薬投与自体が後回しになる(採取は抗菌薬投与を大きく遅らせない範囲で行うべきもの)"]
+        },
+        {
+          q:"敗血症性ショックを念頭に置いた初期治療(輸液・抗菌薬・昇圧薬)を具体的な数値とともに述べよ。",
+          focus:"輸液量の目安 ・ 抗菌薬投与のタイミング ・ 昇圧薬導入の判断",
+          answer:[
+            "<mark>晶質液(乳酸/酢酸リンゲル液)を30mL/kgを目安</mark>に急速輸液を開始し、輸液反応性(血圧・尿量・末梢循環の改善)を評価しながら追加する",
+            "血液培養採取後、<mark>可及的速やかに(1時間以内を目安)</mark>広域抗菌薬を投与する。本症例は肺炎由来のため、呼吸器感染症を想定した広域抗菌薬を、患者背景・耐性リスクに応じて選択する",
+            "十分な輸液を行っても<mark>平均動脈圧65mmHg以上を維持できない場合はノルアドレナリンを第一選択の昇圧薬</mark>として少量から開始し(目安として0.05〜0.1γ程度から漸増)、中心静脈路の確保を検討する"
+          ],
+          mistakes:["輸液のみで昇圧薬導入のタイミングを逃し、平均動脈圧65mmHg未満の状態を漫然と経過観察してしまう","抗菌薬の選択に時間をかけすぎて投与そのものが遅れる(まず適切な広域抗菌薬を投与し、後で培養結果に基づき見直せばよい)"]
+        },
+        {
+          q:"上級医への報告をSBARの型で作成せよ。",
+          focus:"SBARの各要素 ・ 具体的な数値と依頼内容",
+          answer:[
+            "<mark>S(状況)</mark>:肺炎で入院中の78歳女性が、血圧78/44、反応が鈍くなっています",
+            "<mark>B(背景)</mark>:入院3日目、市中肺炎の診断で抗菌薬治療中です",
+            "<mark>A(評価)</mark>:SpO2 89%、HR128、頻呼吸を認め、四肢冷感・網状皮斑があり敗血症性ショックを疑います。qSOFA陽性です",
+            "<mark>R(依頼)</mark>:至急診察をお願いします。酸素投与・輸液を開始し、血液培養を採取済みです。昇圧薬導入についてもご相談させてください"
+          ],
+          mistakes:["「血圧が低いです」とだけ伝え、具体的な数値やこれまでに行った対応を伝えない","依頼したいこと(至急診察してほしいのか、指示だけ欲しいのか)を明確にしない"]
+        }
+      ],
+      summary:{
+        points:[
+          "バイタル異常に気づいたら、まず一人で抱え込まず応援を呼ぶ。RRSの起動基準(呼吸数・SpO2・脈拍・血圧・意識の逸脱値)を目安にできる",
+          "ABCDEの順に評価し、異常を見つけたらその場で初期対応する(評価してから考える、ではなく評価しながら動く)",
+          "qSOFAは簡便だが単独では感度が不十分。乳酸値など他の指標と組み合わせて評価する(J-SSCG2024)",
+          "敗血症性ショックは輸液・抗菌薬・培養採取・昇圧薬導入を同時並行で進める。抗菌薬は血液培養採取後、可及的速やかに(1時間以内目安)投与する",
+          "上級医への報告はSBARで簡潔に。具体的な数値と、これまでの対応、依頼内容を明確に伝える"
+        ],
+        refs:[
+          {authors:"日本集中治療医学会・日本救急医学会", title:"日本版敗血症診療ガイドライン2024", source:"日本集中治療医学会雑誌 31 Supplement 2", year:"2024", url:"https://www.jsicm.org/pdf/cq/J-SSCG2024/J-SSCG2024_Main.pdf"},
+          {authors:"Singer M, Deutschman CS, Seymour CW, et al.", title:"The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3)", source:"JAMA 315(8):801-810", year:"2016", url:"https://doi.org/10.1001/jama.2016.0287"},
+          {authors:"日本集中治療医学会", title:"Rapid Response System運用指針", source:"日本集中治療医学会雑誌 32", year:"2025", url:"https://www.jsicm.org/publication/pdf/JSICM_RRS_20250315.pdf"}
+        ]
+      }
+    },
+    {
+      id:"pe", num:2, tag:"急性呼吸不全",
+      hint:"65歳女性・術後3日目・突然の呼吸困難とSpO2低下",
+      vignette:"65歳女性。3日前に股関節骨折に対する人工骨頭置換術を受け、術後は主に臥床で経過していた。当日午後、トイレ歩行後に突然の呼吸困難とめまいを訴えナースコールがあった。訪室すると、患者は起座位で肩呼吸をしており、会話は途切れ途切れである。",
+      data:"BP 96/60　HR 122　RR 32　SpO2 84%(room air)→リザーバーマスク10L/分で90%　T 36.8℃　意識清明だが強い不安感／心音整、呼吸音は明らかな左右差なし／下腿:左に軽度腫脹あり",
+      questions:[
+        {
+          q:"まず何をすべきか(初動)を述べよ。",
+          focus:"応援要請 ・ 酸素投与の準備",
+          answer:[
+            "応援(担当看護師・当直医)を要請し、酸素投与の準備とモニター装着を進める",
+            "一人で抱え込まず、重症感があれば早期に院内緊急コール/RRSの起動を検討する"
+          ],
+          mistakes:["「一時的な過換気だろう」と自己判断し、応援要請が遅れる"]
+        },
+        {
+          q:"ABCDEアプローチで何を評価し、直ちに何を対応するか(特にB・Cを中心に)述べよ。",
+          focus:"B・Cの異常所見 ・ 見逃してはいけない身体所見",
+          answer:[
+            "<mark>A</mark>:発話が可能で気道開通と判断できる",
+            "<mark>B</mark>:RR32・SpO2 84%と著明な低酸素・頻呼吸を認める。直ちに高流量酸素(リザーバーマスクなど)を開始し目標SpO2 94%以上を確認する。呼吸音の左右差・打診での鼓音の有無で気胸を除外する",
+            "<mark>C</mark>:BP96/60・HR122は代償性の頻脈を伴う循環動態悪化の徴候。静脈路を確保しモニターを装着した上で輸液の適応を評価する。ただし右心負荷を伴う病態では過剰輸液がかえって悪化しうるため少量から慎重に行う",
+            "<mark>D</mark>:意識清明だが強い不安感は低酸素に対する代償反応の可能性がある",
+            "<mark>E</mark>:<mark>下腿の左右差(腫脹)</mark>は深部静脈血栓症を示唆する重要な所見であり、必ず両側を比較して確認する"
+          ],
+          mistakes:["「肩呼吸=過換気・不安発作」と決め打ちし、気胸・肺塞栓・心不全など他の鑑別の所見を意識的に探さない","下肢の観察を省略し、下腿腫脹という重要な手がかりを見逃す"]
+        },
+        {
+          q:"この病歴・所見から考えるべき鑑別診断は何か。特に見逃してはいけない疾患とその根拠、行うべき検査は何か。",
+          focus:"急性肺血栓塞栓症を疑う根拠 ・ 検査前確率評価 ・ 確認すべき検査",
+          answer:[
+            "術後臥床(不動化)+突然発症の呼吸困難・低酸素・頻脈+下腿腫脹という組み合わせは<mark>急性肺血栓塞栓症</mark>を強く疑わせる",
+            "Wells scoreなどの<mark>臨床的検査前確率評価ツール</mark>を用いて評価する。検査前確率が高い場合、D-dimer陰性でも肺塞栓を否定できない点に注意する",
+            "他に<mark>緊張性気胸(片側呼吸音減弱・気管偏位・血圧低下)、心不全・肺水腫(coarse crackles・浮腫)、肺炎、不安・過換気症候群</mark>も鑑別に挙げるが、不動化のリスク因子がある本症例ではまず肺塞栓を除外する行動をとる",
+            "動脈血液ガス分析、心電図(洞性頻脈、S1Q3T3パターン、右室負荷所見)、造影CT(肺動脈造影CT)や下肢静脈エコーで確認する。血行動態が不安定な場合は、画像検査より先にベッドサイド心エコーで右室拡大の有無を評価することもある"
+          ],
+          mistakes:["呼吸音に明らかな左右差がないことだけで気胸・肺塞栓を否定し、経過観察を優先してしまう","Wells scoreなど検査前確率の評価をせず、D-dimerの結果だけで判断しようとする"]
+        },
+        {
+          q:"急性肺血栓塞栓症を強く疑う場合の初期対応(呼吸循環サポート・治療の考え方)を述べよ。",
+          focus:"血行動態が不安定な場合の対応 ・ 安定している場合の対応",
+          answer:[
+            "高流量酸素投与で低酸素を補正し、循環動態が不安定な場合はショックに準じた輸液・モニタリングを行う",
+            "<mark>血行動態が不安定な広範型肺血栓塞栓症(ショックまたは持続する低血圧)が強く疑われる/確定した場合は、緊急で循環器内科にコンサルトし血栓溶解療法やカテーテル治療・外科的血栓摘除術の適応を検討する</mark>",
+            "血行動態が安定していれば、造影CTなどで確定診断した上で抗凝固療法(未分画ヘパリン持続静注またはDOAC)を開始する"
+          ],
+          mistakes:["血行動態が不安定なのに確定診断(造影CT)にこだわりすぎて治療開始が遅れる","抗凝固療法の適応・禁忌(直近の手術による出血リスク)を考慮せずに一律に開始してしまう"]
+        },
+        {
+          q:"SBARで当直医・循環器内科に報告せよ。",
+          focus:"SBARの各要素 ・ 疑う病態の明示",
+          answer:[
+            "<mark>S</mark>:股関節手術後3日目の65歳女性が突然の呼吸困難とSpO2低下(84%→酸素投与下で90%)を来しています",
+            "<mark>B</mark>:3日前に人工骨頭置換術後、臥床が続いていました",
+            "<mark>A</mark>:RR32、HR122、BP96/60で頻呼吸・頻脈・低酸素を認め、左下腿に軽度腫脹があり、急性肺血栓塞栓症を疑います",
+            "<mark>R</mark>:至急診察と造影CTの手配についてご相談したいです。酸素投与を開始し、静脈路を確保しました"
+          ],
+          mistakes:["「息が苦しいそうです」とだけ伝え、バイタルの具体的数値や自分の評価(鑑別診断)を伝えない"]
+        }
+      ],
+      summary:{
+        points:[
+          "術後臥床など不動化のリスク因子がある患者の突然の呼吸困難・低酸素・頻脈では、必ず急性肺血栓塞栓症を鑑別に挙げる",
+          "下肢の観察(左右差)は肺塞栓を疑う重要な手がかり。省略しない",
+          "Wells scoreなど検査前確率評価を併用し、D-dimer単独で判断しない",
+          "血行動態が不安定な広範型肺塞栓症は循環器内科への緊急コンサルトと血栓溶解療法等の適応判断が必要",
+          "呼吸困難の初期対応は高流量酸素と循環モニタリングを最優先し、確定診断にこだわりすぎて治療開始を遅らせない"
+        ],
+        refs:[
+          {authors:"日本循環器学会 他", title:"肺血栓塞栓症および深部静脈血栓症の診断,治療,予防に関するガイドライン(2017年改訂版)", source:"日本循環器学会", year:"2018", url:"https://js-phlebology.jp/wp/wp-content/uploads/2019/03/JCS2017_ito_h.pdf"},
+          {authors:"Konstantinides SV, Meyer G, Becattini C, et al.", title:"2019 ESC Guidelines for the diagnosis and management of acute pulmonary embolism developed in collaboration with the European Respiratory Society (ERS)", source:"European Heart Journal 41(4):543-603", year:"2020", url:"https://doi.org/10.1093/eurheartj/ehz405"}
+        ]
+      }
+    },
+    {
+      id:"hypoglycemia", num:3, tag:"意識障害",
+      hint:"70歳男性・インスリン治療中・呼びかけに反応が乏しい",
+      vignette:"70歳男性。2型糖尿病でインスリン強化療法中。夕食を食欲不振のため半分ほどしか摂取できなかった。眠前のインスリン注射は普段通り行われた。深夜、巡回した看護師が「呼びかけに反応が乏しく、冷汗をかいている」と発見した。",
+      data:"BP 132/78　HR 104　RR 18　SpO2 97%(RA)　T 36.3℃　意識:JCS II-10相当、呼びかけにわずかに開眼するが発語なし／全身に冷汗・振戦あり／瞳孔径左右差なし、対光反射正常",
+      questions:[
+        {
+          q:"第一報を受けて最初に行うべきことは何か。",
+          focus:"応援要請 ・ 気道/呼吸/循環の第一印象評価",
+          answer:[
+            "応援を要請しつつ、気道・呼吸・循環に異常がないか(反応・呼吸様式・脈)を素早く確認する",
+            "モニター装着と静脈路確保の準備を進める"
+          ],
+          mistakes:["「様子を見ましょう」と経過観察のみで、この時点で測定できる血糖測定を後回しにする"]
+        },
+        {
+          q:"ABCDEアプローチで評価する際、意識障害の患者で最低限直ちに確認・測定すべき項目は何か。",
+          focus:"意識障害で省略してはいけない測定項目",
+          answer:[
+            "意識障害を見たら、原因検索と並行してでも直ちに測定すべきものとして<mark>血糖(必須。簡易測定器で数秒で判定可能)</mark>がある",
+            "それに加えSpO2・呼吸数(低酸素・CO2ナルコーシスの除外)、体温(感染・低体温)、瞳孔所見(脳幹病変・薬物中毒の示唆)を確認する",
+            "バイタルサインが安定していることを確認しつつ、血糖測定を後回しにしない"
+          ],
+          mistakes:["血糖測定を「糖尿病治療中だから低いはずがない」と考え省略してしまう(インスリン治療中の患者こそ低血糖のリスクが高い)"]
+        },
+        {
+          q:"意識障害の鑑別診断を広く挙げよ(AIUEOTIPSなどの枠組みを用いて)。本症例の背景から最も考えるべき病態は何か。",
+          focus:"意識障害の鑑別の枠組み ・ 背景からの推論",
+          answer:[
+            "意識障害の鑑別は<mark>AIUEOTIPS(Alcohol、Insulin(低血糖/高血糖)、Uremia、Encephalopathy/Electrolytes、Oxygen(低酸素)/Overdose、Trauma/Temperature、Infection、Psychiatric、Stroke/Seizure など)</mark>の枠組みで幅広く考える",
+            "本症例は<mark>インスリン強化療法中+夕食摂取不良+眠前インスリンは通常量投与という経過</mark>から、低血糖による意識障害が最も強く疑われる",
+            "冷汗・頻脈・振戦という交感神経症状も低血糖に典型的である"
+          ],
+          mistakes:["糖尿病患者の意識障害を安易に「高血糖(糖尿病性ケトアシドーシスなど)」と決めつけ、低血糖という逆の可能性を検討しない"]
+        },
+        {
+          q:"低血糖と判明した場合の初期治療を具体的な薬剤・用量とともに述べよ。改善後の注意点は何か。",
+          focus:"具体的な投与量 ・ 投与経路の選び方 ・ 改善後の観察",
+          answer:[
+            "血糖測定で低血糖(目安として70mg/dL未満。症状を伴う場合はそれ以上でも治療対象になりうる)が確認されたら、経口摂取可能であればブドウ糖5〜10gを経口摂取させる",
+            "本症例のように意識障害があり誤嚥のリスクがある場合は、経口摂取をさせず<mark>50%ブドウ糖液を20〜40mL(ブドウ糖として10〜20g)静脈内投与</mark>する。静脈路確保が難しい場合はグルカゴン筋注も選択肢となる",
+            "投与後15分程度で血糖を再検し、改善が乏しければ追加投与する"
+          ],
+          mistakes:["意識障害があるのに無理に経口摂取(ジュースなど)をさせようとし、誤嚥のリスクを高めてしまう","血糖が正常化して意識が改善したことだけで安心し、再検・経過観察をせずその場を離れてしまう(持効型インスリンやSU薬による遷延性・再発性低血糖のリスクがある)"]
+        },
+        {
+          q:"SBARで上級医に報告せよ。",
+          focus:"血糖の具体的数値 ・ 依頼内容",
+          answer:[
+            "<mark>S</mark>:糖尿病でインスリン治療中の70歳男性が、呼びかけに反応が乏しく発見されました",
+            "<mark>B</mark>:夕食の摂取が半分程度で、眠前インスリンは通常量投与されています",
+            "<mark>A</mark>:血糖測定で低血糖を認め、冷汗・振戦を伴っています。低血糖による意識障害と考えます",
+            "<mark>R</mark>:50%ブドウ糖液の静注について指示をいただきたいです。その後の血糖再検・インスリン量の見直しについてもご相談させてください"
+          ],
+          mistakes:["血糖値の具体的な数値を確認・報告せずに「低血糖のようです」とだけ伝える"]
+        }
+      ],
+      summary:{
+        points:[
+          "意識障害を見たら、原因検索を進める前にまず血糖を測定する(数秒で判定でき、治療可能な原因を見逃さないため)",
+          "意識障害の鑑別はAIUEOTIPSなど幅広い枠組みで考える。糖尿病治療中でも「高血糖」と決めつけず低血糖を必ず候補に入れる",
+          "意識障害を伴う低血糖は経口摂取させず、50%ブドウ糖液20〜40mL(ブドウ糖10〜20g)を静注する",
+          "改善後も再検・経過観察を怠らない。持効型インスリンやSU薬による遷延性・再発性低血糖に注意する",
+          "上級医への報告では血糖の具体的な数値と、その後の指示を明確に依頼する"
+        ],
+        refs:[
+          {authors:"日本糖尿病学会", title:"糖尿病診療ガイドライン2024 第20章 糖尿病における急性代謝失調・シックデイ", source:"日本糖尿病学会", year:"2024", url:"https://www.jds.or.jp/uploads/files/publications/gl2024/20.pdf"},
+          {authors:"日本糖尿病学会", title:"糖尿病治療ガイド2024-2025", source:"文光堂", year:"2024", url:"https://www.bunkodo.co.jp/book/52BVY69UV1.html"}
+        ]
+      }
+    },
+    {
+      id:"gibleed", num:4, tag:"循環虚脱・出血性ショック",
+      hint:"58歳男性・肝硬変の既往・大量吐血",
+      vignette:"58歳男性。C型肝硬変の既往で通院中。夕食後に突然大量の吐血があり、家族に伴われて救急外来を受診した。来院時、患者は顔面蒼白でぐったりしており、会話には応じるが声は小さい。",
+      data:"BP 82/50　HR 132　RR 24　SpO2 96%(RA)　T 36.5℃　意識清明だが強い倦怠感／皮膚:蒼白・冷汗／腹部:軽度膨隆、腹水を疑う波動あり",
+      questions:[
+        {
+          q:"来院時の第一印象で重症感を認めた。まず何をすべきか。",
+          focus:"応援要請 ・ 静脈路確保の優先度",
+          answer:[
+            "直ちに応援(当直医・消化器内科、場合により外科)を要請し、大口径の静脈路を2本確保する準備を進める",
+            "一人で抱え込まず、重症度が高いと判断すればICU・内視鏡室への早期連絡も並行して進める"
+          ],
+          mistakes:["「まず問診を詳しく」と時間をかけてしまい、静脈路確保など初期対応が後回しになる"]
+        },
+        {
+          q:"ABCDEで評価すべき点(特にCを中心に)と直ちに行う初期対応を述べよ。",
+          focus:"気道保護の必要性 ・ 循環へのアプローチ",
+          answer:[
+            "<mark>A</mark>:嘔吐物による誤嚥・気道閉塞のリスクがあるため、頭部を横に向ける・吸引の準備をする。意識レベルが低下すれば気管挿管による気道保護を検討する",
+            "<mark>B</mark>:頻呼吸(RR24)は出血性ショックに伴う代償性変化の可能性があり、酸素投与を行う",
+            "<mark>C</mark>:BP82/50・HR132・冷汗は出血性ショックの所見。<mark>大口径静脈路を2本確保</mark>し、輸液(細胞外液)を開始しつつ、輸血の準備(血液型・交差適合試験)を直ちに進める",
+            "<mark>D</mark>:意識清明だが今後の血圧低下でさらに意識低下しうるため経時的に評価する",
+            "<mark>E</mark>:<mark>腹水を疑う所見</mark>があり、肝硬変に伴う門脈圧亢進を背景とした出血(静脈瘤破裂)を強く疑う所見として記録する"
+          ],
+          mistakes:["意識清明であることだけで「重症ではない」と判断し、バイタルサインの重症度(頻脈・血圧低下)を過小評価する"]
+        },
+        {
+          q:"この病歴(肝硬変)から考えるべき出血源は何か。危険な合併症として何を念頭に置くべきか。",
+          focus:"想定される出血源 ・ 静脈瘤出血に特有の合併症",
+          answer:[
+            "肝硬変の既往がある患者の吐血では<mark>食道静脈瘤・胃静脈瘤破裂</mark>を最も強く疑う。他に非静脈瘤性の出血源(消化性潰瘍、Mallory-Weiss症候群など)も鑑別に挙げる",
+            "静脈瘤出血は大量・急速な出血となりやすく、出血性ショックに加え<mark>気道への血液誤嚥による窒息</mark>、<mark>肝性脳症の増悪(消化管内の血液がアンモニア産生を増加させる)</mark>、<mark>感染症合併(自然発症性細菌性腹膜炎などのリスクが上昇し予防的抗菌薬投与が推奨される)</mark>にも注意する"
+          ],
+          mistakes:["出血源の鑑別を「肝硬変だから静脈瘤だろう」で終わらせ、緊急上部消化管内視鏡による確定診断・止血処置の必要性を後回しにする"]
+        },
+        {
+          q:"初期蘇生の具体的な内容(輸液・輸血の目標値・薬物治療)を述べよ。",
+          focus:"輸血の目標Hb値 ・ 血管作動薬 ・ 予防的抗菌薬",
+          answer:[
+            "大口径静脈路2本を確保し細胞外液(乳酸/酢酸リンゲル液)で初期蘇生を行いながら、赤血球輸血は<mark>Hb 7g/dL程度をトリガーとし、Hb 7〜9g/dL程度を目標とする制限的輸血戦略</mark>を基本とする(過剰な輸血はかえって門脈圧を上昇させ再出血のリスクを高めるとされる)。ただし虚血性心疾患などの合併症があればHb 9〜10g/dL程度を目標に調整する",
+            "静脈瘤出血を疑う場合は<mark>バソプレシン誘導体(テルリプレシン)やソマトスタチンアナログ(オクトレオチド)などの血管作動薬</mark>を早期に投与し、<mark>予防的抗菌薬(セフトリアキソンなど)</mark>も併用した上で、緊急上部消化管内視鏡による止血処置(内視鏡的静脈瘤結紮術など)を消化器内科に依頼する"
+          ],
+          mistakes:["「輸血すればするほど良い」と考え、目標を定めずに輸血を行い、かえって出血を助長してしまう","血管作動薬や予防的抗菌薬の投与を忘れ、内視鏡の手配のみに意識が向いてしまう"]
+        },
+        {
+          q:"SBARで消化器内科医に報告せよ。",
+          focus:"疑う病態 ・ すでに行った対応",
+          answer:[
+            "<mark>S</mark>:肝硬変の既往がある58歳男性が大量吐血で来院し、血圧82/50、脈拍132です",
+            "<mark>B</mark>:C型肝硬変で通院中、今回夕食後に突然の大量吐血がありました",
+            "<mark>A</mark>:出血性ショックの状態で、腹水を疑う所見もあり食道静脈瘤破裂を疑います",
+            "<mark>R</mark>:至急緊急内視鏡での評価・止血処置をお願いしたいです。大口径静脈路を確保し輸液を開始、輸血のオーダーも進めています"
+          ],
+          mistakes:["「吐血しています」とだけ伝え、バイタルサインや自分が疑う病態、すでに行った対応を伝えない"]
+        }
+      ],
+      summary:{
+        points:[
+          "大量出血を疑ったら、まず大口径静脈路の確保と応援要請を最優先する",
+          "肝硬変の既往がある患者の吐血は食道・胃静脈瘤破裂を強く疑う。誤嚥・肝性脳症増悪・感染症合併にも注意する",
+          "輸血は制限的戦略(Hb 7g/dL程度をトリガー、7〜9g/dLを目標)が基本。心血管疾患合併例ではHb 9〜10g/dLを目標に調整する",
+          "静脈瘤出血を疑う場合は血管作動薬(テルリプレシン・オクトレオチドなど)と予防的抗菌薬を早期に併用し、緊急内視鏡を手配する",
+          "上級医・消化器内科への報告はSBARで、バイタルと疑う病態、依頼内容を明確に伝える"
+        ],
+        refs:[
+          {authors:"日本消化器病学会・日本肝臓学会", title:"肝硬変診療ガイドライン2020(改訂第3版)", source:"南江堂", year:"2020", url:"https://www.jsge.or.jp/committees/guideline/guideline/pdf/kankouhen2020_re.pdf"},
+          {authors:"日本消化器病学会・日本消化器内視鏡学会", title:"消化性潰瘍診療ガイドライン2020(改訂第3版)", source:"南江堂", year:"2020", url:"https://www.jsge.or.jp/committees/guideline/guideline/pdf/syoukasei2020_2.pdf"}
+        ]
+      }
+    },
+    {
+      id:"acs", num:5, tag:"胸痛・循環動態悪化",
+      hint:"60歳男性・術後2日目・突然の胸痛と血圧低下",
+      vignette:"60歳男性。大腸癌に対する開腹手術後2日目。安静時に突然の前胸部絞扼感を訴え、冷汗を伴っていた。ナースコールで訪室すると、患者は顔をしかめ苦悶様表情で、「胸が締め付けられる」と話した。",
+      data:"BP 88/56　HR 58(不整)　RR 22　SpO2 93%(RA)　T 36.4℃　意識清明／心音:不整、S3聴取せず／呼吸音:清",
+      questions:[
+        {
+          q:"訪室し重症感を認めた。まず何をすべきか。",
+          focus:"応援要請 ・ モニター/酸素の準備",
+          answer:[
+            "直ちに応援(当直医・循環器内科)を要請し、モニター装着・酸素投与の準備を進める",
+            "一人で判断を抱え込まず、重症感があれば早期に院内緊急コールも検討する"
+          ],
+          mistakes:["「術後だから創部の痛みだろう」と決めつけ、胸痛の性状や随伴症状を確認せず対応が遅れる"]
+        },
+        {
+          q:"ABCDEで評価すべき点と直ちに行う対応(特にCと初期検査)を述べよ。",
+          focus:"12誘導心電図を取得するタイミング ・ Cの異常への対応",
+          answer:[
+            "<mark>A</mark>:発話可能で気道開通",
+            "<mark>B</mark>:RR22・SpO2 93%とやや低酸素であり酸素投与を開始する",
+            "<mark>C</mark>:BP88/56・HR58で徐脈・不整脈を伴う血圧低下は重大な循環動態悪化を示唆する。直ちにモニター心電図を装着し、<mark>可能な限り10分以内に12誘導心電図を記録する</mark>。静脈路を確保し、繰り返しバイタルを測定する",
+            "<mark>D・E</mark>:意識は清明だが、循環動態が急激に悪化する可能性を念頭に継続的に観察する"
+          ],
+          mistakes:["胸痛の評価より先に鎮痛薬投与を優先し、12誘導心電図の記録が後回しになる"]
+        },
+        {
+          q:"この病歴・所見から考えるべき鑑別診断は何か。確認すべき検査は何か。",
+          focus:"急性冠症候群を疑う根拠 ・ 見逃してはいけない他の鑑別",
+          answer:[
+            "術後(周術期)の患者における突然発症の胸痛・冷汗・血圧低下・徐脈/不整脈という組み合わせは<mark>急性冠症候群(特にST上昇型心筋梗塞)</mark>を強く疑う",
+            "他に<mark>肺血栓塞栓症、大動脈解離、緊張性気胸</mark>なども鑑別に挙がるため、12誘導心電図に加え、<mark>血圧の左右差の確認(大動脈解離の除外)、呼吸音の左右差(気胸の除外)</mark>も併せて評価する",
+            "心筋トロポニンなどの心筋逸脱酵素、胸部X線も確認する"
+          ],
+          mistakes:["急性冠症候群を疑うあまり、他の緊急性の高い鑑別(大動脈解離など、抗血栓療法の適応が正反対になりうる疾患)の除外を怠る"]
+        },
+        {
+          q:"12誘導心電図でST上昇を認めた場合の初期対応を具体的に述べよ。",
+          focus:"アスピリン投与 ・ 酸素投与の適応 ・ 緊急カテーテル手配 ・ 周術期の注意点",
+          answer:[
+            "ST上昇型心筋梗塞(STEMI)として直ちに対応する。<mark>アスピリン162〜325mgを咀嚼服用</mark>させる(禁忌がなければ)",
+            "<mark>SpO2 90%未満の場合にのみ酸素投与を行う</mark>(低酸素がない場合の漫然とした酸素投与は避ける)",
+            "来院(発症)から可及的速やかに、<mark>目安として90分以内の経皮的冠動脈形成術(primary PCI)</mark>を実施できるよう、直ちに循環器内科・カテーテル室に緊急連絡する",
+            "本症例は術後2日目であり、<mark>抗血小板薬・抗凝固療法は術後出血のリスクとの兼ね合いを循環器内科・執刀科と協働して判断する</mark>必要がある"
+          ],
+          mistakes:["周術期であることを気にするあまり、アスピリン投与や緊急カテーテル手配自体を自己判断で見送ってしまう(出血リスクとの兼ね合いは循環器内科と協働して判断すべきで、一人で「投与しない」と決めない)"]
+        },
+        {
+          q:"SBARで循環器内科医に報告せよ。",
+          focus:"心電図所見の明示 ・ 周術期であることへの言及",
+          answer:[
+            "<mark>S</mark>:開腹術後2日目の60歳男性が突然の胸痛と血圧低下(88/56)、徐脈・不整脈を来しています",
+            "<mark>B</mark>:大腸癌手術後2日目で、既往に特記事項はありません",
+            "<mark>A</mark>:12誘導心電図でST上昇を認め、急性冠症候群を疑います",
+            "<mark>R</mark>:至急診察と緊急カテーテル治療の適応についてご相談したいです。アスピリンの投与や抗血栓療法は術後出血リスクもあるため、執刀医とも合わせてご相談させてください"
+          ],
+          mistakes:["心電図所見(ST上昇の有無・部位)を確認・報告せず「胸が痛いそうです」とだけ伝える"]
+        }
+      ],
+      summary:{
+        points:[
+          "突然の胸痛・冷汗・血圧低下・徐脈/不整脈は急性冠症候群を強く疑う所見。術後だからと創部痛と決めつけない",
+          "循環動態悪化を伴う胸痛では、可能な限り10分以内に12誘導心電図を記録する",
+          "大動脈解離・肺塞栓・気胸など、対応が正反対になりうる他の緊急性の高い鑑別も並行して除外する",
+          "STEMIと判明したらアスピリン投与とprimary PCI(目安90分以内)に向けた緊急連絡を直ちに行う。酸素投与はSpO2 90%未満の場合に限る",
+          "周術期の抗血栓療法は自己判断で見送らず、循環器内科・執刀科と協働して判断する"
+        ],
+        refs:[
+          {authors:"日本循環器学会・日本心血管インターベンション治療学会・日本心臓病学会", title:"2023年JCS/CVIT/JCC ガイドラインフォーカスアップデート版 急性冠症候群", source:"日本循環器学会", year:"2023", url:"https://www.j-circ.or.jp/cms/wp-content/uploads/2023/03/JCS2023_hokimoto.pdf"},
+          {authors:"O'Gara PT, Kushner FG, Ascheim DD, et al.", title:"2013 ACCF/AHA Guideline for the Management of ST-Elevation Myocardial Infarction", source:"Circulation 127(4):e362-e425", year:"2013", url:"https://doi.org/10.1161/CIR.0b013e3182742cf6"}
+        ]
+      }
+    },
+    {
+      id:"airway", num:6, tag:"気道緊急",
+      hint:"84歳男性・嚥下機能低下・食事中の突然のむせ込みと発声不能",
+      vignette:"84歳男性。脳梗塞後遺症で嚥下機能がやや低下しているが経口摂取していた。昼食中に急にむせ込み、その後声が出せず、両手で首をつかむ仕草をした。付き添いの看護師がすぐに気づいた。",
+      data:"意識清明・強い苦悶様表情／発声不能、咳嗽も弱く効果的でない／顔面〜口唇にかけてチアノーゼが出現しつつある／体動のためSpO2測定できず",
+      questions:[
+        {
+          q:"この状況を目撃した瞬間、まず何をすべきか。",
+          focus:"窒息のサインの認識 ・ 応援要請",
+          answer:[
+            "直ちに大声で応援を呼ぶ(応援を呼びに行くために患者のそばを離れる場合も、できるだけ短時間にする)",
+            "窒息のサインである<mark>チョークサイン(両手で首をつかむ仕草)</mark>を認識し、様子見をしない"
+          ],
+          mistakes:["発声できていることを期待して「もう少し様子を見よう」と対応を開始しない","応援を呼ばずに一人で対処しようとする"]
+        },
+        {
+          q:"気道異物による窒息が疑われる。意識がある場合の対応を具体的な手技とともに述べよ。",
+          focus:"背部叩打法・腹部突き上げ法 ・ 避けるべき対応",
+          answer:[
+            "有効な咳ができておらず窒息(気道完全閉塞またはそれに近い状態)が疑われるため、<mark>意識がある場合はまず背部叩打法(肩甲骨の間を手掌基部で強く叩く)を数回行い、効果がなければ腹部突き上げ法(ハイムリック法)を試みる</mark>",
+            "背部叩打法と腹部突き上げ法を、異物が排出されるか反応がなくなるまで交互に繰り返す",
+            "同時にモニター・気管挿管の準備、耳鼻咽喉科への緊急連絡も進める"
+          ],
+          mistakes:["腹部突き上げ法のみに固執し、背部叩打法との併用・繰り返しを行わない","口の中に指を入れて異物を探ろうとする(見えない異物への盲目的な指探りはかえって異物を押し込むリスクがあり、有効な手技を後回しにする)"]
+        },
+        {
+          q:"対応中に反応がなくなった(意識消失)場合、対応はどう変わるか。",
+          focus:"心停止に準じた対応への切り替え ・ 気道確保の手段",
+          answer:[
+            "反応がなくなった場合は<mark>直ちに心停止に準じてBLS/ALSのアルゴリズムに切り替え、胸骨圧迫を開始</mark>する(意識消失した気道異物症例では、胸骨圧迫が腹部突き上げ法の代わりとして異物排出に有効とされている)",
+            "気道確保を試みる際に口腔内に異物が見えれば除去し、<mark>訓練を受けた医療者であればマギール鉗子を用いた異物除去</mark>を試みる",
+            "並行してAED/除細動器の準備、気管挿管や外科的気道確保(輪状甲状靱帯切開など)が可能な人員の招集を進める"
+          ],
+          mistakes:["反応がなくなってもハイムリック法にこだわり続け、心停止に準じた胸骨圧迫への切り替えが遅れる"]
+        },
+        {
+          q:"気道確保後、原因検索と再発予防のために確認すべきことは何か。",
+          focus:"誤嚥性肺炎の評価 ・ 嚥下機能の再評価",
+          answer:[
+            "気道確保・酸素化が得られたら、誤嚥性肺炎・気道粘膜損傷の有無を評価するため胸部X線・必要に応じて気管支鏡検査を行う",
+            "再発予防のため、<mark>嚥下機能評価(嚥下造影検査・嚥下内視鏡検査)を改めて行い、食形態の見直しや摂食時の姿勢・介助方法を多職種(言語聴覚士・栄養士など)で検討する</mark>"
+          ],
+          mistakes:["「今回はうまく解除できた」で終わらせ、嚥下機能の再評価や食形態の見直しにつなげない(同じ状況が再発するリスクを放置する)"]
+        },
+        {
+          q:"SBARで上級医・耳鼻咽喉科に報告せよ(気道確保後の場面を想定)。",
+          focus:"今後必要な評価の明示",
+          answer:[
+            "<mark>S</mark>:嚥下機能低下のある84歳男性が食事中に気道異物による窒息を来し、背部叩打法で異物を排出、現在は気道確保・呼吸状態は安定しています",
+            "<mark>B</mark>:脳梗塞後遺症で嚥下機能がやや低下していましたが経口摂取していました",
+            "<mark>A</mark>:一時的にチアノーゼを認めましたが現在SpO2は改善しています。誤嚥性肺炎や気道粘膜損傷の有無、今後の嚥下機能評価が必要と考えます",
+            "<mark>R</mark>:耳鼻咽喉科での気道評価と、嚥下機能の再評価についてご相談したいです"
+          ],
+          mistakes:["「窒息しかけましたが大丈夫でした」とだけ伝え、その後の評価・再発予防の必要性を伝えない"]
+        }
+      ],
+      summary:{
+        points:[
+          "窒息のサイン(チョークサイン・発声不能・弱い咳嗽)を見たら様子見をせず直ちに応援を呼ぶ",
+          "意識がある窒息患者には背部叩打法と腹部突き上げ法を交互に繰り返す。盲目的な指探りは避ける",
+          "反応がなくなったら直ちに胸骨圧迫を含むBLS/ALSに切り替える。胸骨圧迫は異物排出にも有効とされる",
+          "気道確保後も終わりではなく、誤嚥性肺炎の評価と嚥下機能の再評価・再発予防を多職種で検討する",
+          "気道緊急は展開が数分単位で急激に悪化しうる。応援要請と処置を同時並行で進める"
+        ],
+        refs:[
+          {authors:"日本蘇生協議会", title:"JRC蘇生ガイドライン2020", source:"医学書院", year:"2021", url:"https://www.jrc-cpr.org/books/"}
+        ]
+      }
+    },
+    {
+      id:"anaphylaxis", num:7, tag:"アナフィラキシー",
+      hint:"45歳女性・造影CT検査後・全身の蕁麻疹と呼吸困難",
+      vignette:"45歳女性。腹部精査のため造影CT検査を施行し、検査室から病棟に戻った直後から全身の掻痒感を訴えた。数分のうちに全身に膨疹が拡大し、声のかすれと呼吸困難を訴えた。",
+      data:"BP 84/52　HR 128　RR 26　SpO2 91%(RA)　T 36.5℃　意識清明だが強い不安感／全身に膨疹・紅斑、口唇・眼瞼に浮腫、両側前胸部にwheeze聴取",
+      questions:[
+        {
+          q:"症状の急速な進行を認めた。まず何をすべきか。",
+          focus:"原因物質の中止 ・ 応援要請",
+          answer:[
+            "直ちに応援を呼び、原因薬剤(造影剤)の投与・接触があれば中止/除去する",
+            "モニター装着、静脈路確保、酸素投与の準備を進める"
+          ],
+          mistakes:["「蕁麻疹だけなら抗ヒスタミン薬で様子を見よう」と考え、呼吸器症状・循環症状の評価を後回しにする"]
+        },
+        {
+          q:"アナフィラキシーと診断するための基準(症状の広がり)を述べよ。本症例は該当するか。",
+          focus:"診断基準となる症状の組み合わせ",
+          answer:[
+            "アナフィラキシーは、<mark>皮膚・粘膜症状に加えて呼吸器症状または循環器症状(血圧低下等)のいずれかを伴う場合、あるいは既知のアレルゲンへの曝露後に血圧低下単独でも診断</mark>される",
+            "本症例は全身の膨疹・口唇浮腫(皮膚粘膜症状)に加え、wheeze・呼吸困難(呼吸器症状)、BP84/52(循環器症状)を伴っており、<mark>アナフィラキシーの診断基準を満たす</mark>"
+          ],
+          mistakes:["「血圧が保たれているから軽症」など単一の所見だけで重症度を判断し、複数系統の症状が揃っていることを見落とす"]
+        },
+        {
+          q:"最優先で行うべき治療は何か。薬剤名・用量・投与経路・部位を具体的に述べよ。",
+          focus:"アドレナリン筋注の用量・部位 ・ 反復投与の目安",
+          answer:[
+            "最優先の治療は<mark>アドレナリン筋肉注射</mark>である。<mark>0.1%アドレナリン(1mg/mL)を成人量0.3〜0.5mg、大腿部中央前外側に筋肉内注射</mark>する",
+            "効果不十分な場合は<mark>5〜15分毎に繰り返し投与</mark>できる",
+            "同時に酸素投与、仰臥位で下肢挙上(呼吸困難があれば座位でもよい)、静脈路確保による急速輸液(細胞外液)も並行して行う",
+            "抗ヒスタミン薬やステロイドは皮膚症状や遅発反応の抑制には有用だが、アドレナリンの代わりにはならず、これらを優先してアドレナリン投与を遅らせてはならない"
+          ],
+          mistakes:["抗ヒスタミン薬やステロイドを先に投与し、アドレナリン筋注が後回しになる(アナフィラキシーの初期治療における最大の誤り)","アドレナリンを静脈内投与しようとし、希釈や投与量の誤りによる不整脈などのリスクを高めてしまう(静脈内投与は心停止時など限られた状況・厳密な管理下でのみ行う)"]
+        },
+        {
+          q:"初期治療後も改善が乏しい、または再増悪した場合の対応は何か。",
+          focus:"昇圧薬・輸液の追加 ・ 二相性反応への備え",
+          answer:[
+            "アドレナリン筋注を繰り返しても血圧が維持できない、または呼吸状態が改善しない場合は、<mark>大量輸液と昇圧薬(アドレナリン持続静注など)の導入</mark>を検討し、ICU管理・気道確保(気管挿管)の準備を進める",
+            "<mark>二相性反応(初期症状改善後、数時間〜十数時間後に症状が再燃すること)</mark>があるため、症状が改善した後も一定時間(目安として少なくとも4〜6時間、重症例ではより長時間)は経過観察する"
+          ],
+          mistakes:["症状が一旦改善したことで安心し、二相性反応を念頭に置いた経過観察の時間を確保せずに帰宅・退室させてしまう"]
+        },
+        {
+          q:"SBARで上級医に報告せよ。",
+          focus:"アドレナリン投与状況の明示",
+          answer:[
+            "<mark>S</mark>:造影CT検査後の45歳女性が、全身の蕁麻疹と呼吸困難、血圧低下(84/52)を来しています",
+            "<mark>B</mark>:検査室から戻った直後から症状が急速に進行しました",
+            "<mark>A</mark>:皮膚・呼吸器・循環器の複数系統に症状がありアナフィラキシーと判断し、アドレナリン筋注を行いました",
+            "<mark>R</mark>:至急診察と、今後の経過観察・ICU管理の要否についてご相談したいです"
+          ],
+          mistakes:["アドレナリンを投与したかどうか、投与した場合の時刻・用量を報告に含めない"]
+        }
+      ],
+      summary:{
+        points:[
+          "皮膚粘膜症状に呼吸器症状または循環器症状を伴えばアナフィラキシーと判断し、様子を見ずに直ちに対応する",
+          "最優先治療はアドレナリン筋肉注射(成人0.3〜0.5mg、大腿部中央前外側)。抗ヒスタミン薬・ステロイドを先に投与してアドレナリンを遅らせない",
+          "効果不十分なら5〜15分毎に反復投与する。静脈内投与は限られた状況でのみ行う",
+          "改善後も二相性反応に備え、少なくとも4〜6時間(重症例はより長時間)の経過観察を行う",
+          "原因物質(造影剤・薬剤等)の投与・接触があれば直ちに中止/除去する"
+        ],
+        refs:[
+          {authors:"一般社団法人日本アレルギー学会", title:"アナフィラキシーガイドライン2022", source:"日本アレルギー学会", year:"2022", url:"https://anaphylaxis-guideline.jp/wp-content/uploads/2023/03/guideline_slide2022.pdf"},
+          {authors:"Muraro A, Roberts G, Worm M, et al.", title:"Anaphylaxis: guidelines from the European Academy of Allergy and Clinical Immunology", source:"Allergy 69(8):1026-1045", year:"2014", url:"https://doi.org/10.1111/all.12437"}
+        ]
+      }
+    },
+    {
+      id:"seizure", num:8, tag:"痙攣重積",
+      hint:"36歳男性・てんかんの既往・病室での全身痙攣",
+      vignette:"36歳男性。てんかんの既往があり抗てんかん薬を内服中。検査目的で入院していたところ、病室で突然全身の強直間代性痙攣が始まった。看護師がすぐに発見し、痙攣は5分以上持続している。",
+      data:"痙攣中のためBP測定困難／HR 132(モニター)／SpO2 88%(RA)／意識レベル評価不能(痙攣中)／舌根の軽度出血あり、チアノーゼ様の顔色",
+      questions:[
+        {
+          q:"痙攣を目撃した直後、まず何をすべきか。",
+          focus:"外傷予防 ・ 時刻の記録 ・ 応援要請",
+          answer:[
+            "直ちに応援を呼び、患者の転落・外傷を防ぐため周囲の危険物を除去し、可能であれば側臥位に近い姿勢をとらせる",
+            "<mark>時計を確認し痙攣の開始時刻・持続時間を記録し始める</mark>(重積状態の判断と治療のタイミングに直結するため)"
+          ],
+          mistakes:["痙攣中に無理に四肢を押さえつけたり、口の中に物を入れて舌を守ろうとする(かえって外傷や誤嚥のリスクを高める、誤った対応)","開始時刻を記録せず、後から「どのくらい続いていたか」が分からなくなる"]
+        },
+        {
+          q:"ABCDEアプローチで、痙攣中に評価・対応すべき点は何か。",
+          focus:"気道保護の考え方 ・ 血糖測定のタイミング",
+          answer:[
+            "<mark>A</mark>:痙攣中は舌根沈下や分泌物・出血により気道が脅かされやすい。可能な範囲で側臥位をとらせ、気道の確保・吸引の準備をする。無理な気道確保操作(バイトブロック挿入等)で外傷を増やさないよう注意する",
+            "<mark>B</mark>:SpO2 88%と低酸素を認めており、酸素投与を行う。呼吸状態を継続的に観察する",
+            "<mark>C</mark>:痙攣中は血圧測定が困難なことが多いが、モニター心電図で頻脈・不整脈の有無を確認し、痙攣後速やかに静脈路を確保する",
+            "<mark>D</mark>:痙攣そのものが意識障害の原因であり、痙攣後の意識レベル(回復の速さ)を評価する。<mark>低血糖が痙攣の原因や増悪因子になりうるため、可能な限り早期に血糖測定を行う</mark>"
+          ],
+          mistakes:["痙攣中であることを理由に血糖測定や静脈路確保などできる評価・準備を先送りにしすぎる(痙攣が続く場合、治療薬投与のためにも静脈路確保は急務)"]
+        },
+        {
+          q:"この痙攣は「てんかん重積状態」に該当するか。その定義を述べよ。",
+          focus:"てんかん重積状態の定義 ・ 治療開始の目安となる時間",
+          answer:[
+            "てんかん重積状態は、一般に<mark>「5分以上持続する痙攣」または「意識の回復がないまま反復する痙攣」</mark>と定義される(治療介入を要する状態として、以前の「30分」という定義から短縮された)",
+            "本症例は<mark>痙攣が5分以上持続</mark>しており、てんかん重積状態として直ちに治療を開始すべき状態に該当する"
+          ],
+          mistakes:["「そのうち止まるだろう」と経過観察を続け、5分という治療開始の目安を超えても薬物治療に踏み切らない"]
+        },
+        {
+          q:"治療薬を段階に分けて、具体的な薬剤・用量とともに述べよ。",
+          focus:"第一段階(ベンゾジアゼピン)の用量 ・ 第二段階の薬剤 ・ 低血糖の除外",
+          answer:[
+            "第一段階として<mark>ベンゾジアゼピン系薬剤(ジアゼパム静注10mgずつ、最大20mgまで、またはミダゾラム静注0.15〜0.3mg/kg)</mark>を投与する",
+            "静脈路確保が困難な場合はジアゼパム注腸(10〜30mg)やミダゾラムの筋注・口腔/鼻腔内投与も選択肢となる",
+            "ベンゾジアゼピン投与後も痙攣が持続する場合(第二段階)は<mark>ホスフェニトインやレベチラセタムの静注</mark>を考慮する",
+            "並行して低血糖の除外・補正(血糖が低ければブドウ糖投与)、電解質異常の確認も行う"
+          ],
+          mistakes:["ベンゾジアゼピン投与量を「少なめに」と自己判断で控えてしまい、十分な用量まで増量しないまま次の段階に進めず時間だけが経過する","低血糖の除外を怠ったまま抗てんかん薬の投与だけを繰り返す"]
+        },
+        {
+          q:"痙攣が治療にもかかわらず持続する場合、上級医(神経内科・ICU)にSBARで報告せよ。",
+          focus:"持続時間と投与済み薬剤の明示",
+          answer:[
+            "<mark>S</mark>:てんかんの既往がある36歳男性が全身痙攣を来し、開始から数分持続、ベンゾジアゼピンを投与しましたが痙攣が持続しています",
+            "<mark>B</mark>:てんかんの既往があり抗てんかん薬を内服中でした",
+            "<mark>A</mark>:SpO2 88%と低酸素があり、酸素投与を行っています。難治性のてんかん重積状態と考えます",
+            "<mark>R</mark>:至急診察と、次の段階の薬物治療(ホスフェニトイン等)、ICUでの管理についてご相談したいです"
+          ],
+          mistakes:["痙攣の持続時間や、これまでに投与した薬剤・用量を報告に含めず「痙攣が止まりません」とだけ伝える"]
+        }
+      ],
+      summary:{
+        points:[
+          "痙攣を目撃したら開始時刻を記録し、周囲の安全確保と応援要請を同時に行う。無理な抑制や口腔内への異物挿入は避ける",
+          "てんかん重積状態は「5分以上持続する痙攣」または「意識回復のない反復する痙攣」と定義され、5分が治療開始の目安となる",
+          "第一段階治療はベンゾジアゼピン(ジアゼパム10mgずつ最大20mg、またはミダゾラム0.15〜0.3mg/kg)。効果不十分なら第二段階(ホスフェニトイン・レベチラセタム等)に進む",
+          "痙攣の原因・増悪因子として低血糖・電解質異常を必ず除外する",
+          "治療にもかかわらず痙攣が持続する場合は早期にICU・神経内科へ相談する"
+        ],
+        refs:[
+          {authors:"日本神経学会", title:"てんかん診療ガイドライン2018 第8章 てんかん重積状態(追補2022)", source:"医学書院", year:"2018/2022", url:"https://www.neurology-jp.org/guidelinem/epgl/tenkan_2018_08.pdf"},
+          {authors:"Glauser T, Shinnar S, Gloss D, et al.", title:"Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus in Children and Adults", source:"Epilepsy Currents 16(1):48-61", year:"2016", url:"https://doi.org/10.5698/1535-7597-16.1.48"}
+        ]
+      }
+    }
+  ];
+
+  var PRINCIPLES = [
+    {t:"まず応援を呼ぶ — 一人で抱え込まない", d:"急変に気づいたら、対応を始める前に(あるいは同時に)大声やナースコール・院内PHSで応援を呼ぶ。「もう少し自分で様子を見てから」と一人で抱え込むことが、対応の遅れにつながる最大の要因になる。"},
+    {t:"反応を確認し、ABCDEで評価を始める", d:"声をかけ、肩を叩いて反応を確認する。反応がなく正常な呼吸がなければ心停止に準じてBLS/ALSへ切り替える。反応があればA(気道)→B(呼吸)→C(循環)→D(意識)→E(全身)の順に評価し、異常を見つけたその場で対応する。"},
+    {t:"A:気道 — 発声できるか、閉塞のサインはないか", d:"声が出るか、喀痰・嘔吐物・舌根沈下による閉塞音(いびき様呼吸)はないかを確認する。異常があれば吸引・下顎挙上・経鼻/経口エアウェイの準備を進める。"},
+    {t:"B:呼吸 — SpO2だけでなく呼吸数・呼吸様式を見る", d:"SpO2に加え呼吸数、胸郭の動き、呼吸音の左右差、努力呼吸(陥没呼吸・肩呼吸)の有無を確認する。「SpO2 95%だから大丈夫」ではなく、酸素投与量・呼吸数・意識・循環をセットで評価する。酸素投与をためらわず、必要ならバッグバルブマスクで補助する。"},
+    {t:"C:循環 — 血圧だけでなく脈拍・末梢・意識・尿量も見る", d:"血圧・脈拍・末梢冷感・意識・尿量を総合して評価する。モニター装着、静脈路確保、採血を進め、ショックが疑われれば原因検索と並行して輸液など初期蘇生を開始する。"},
+    {t:"D:意識 — GCS/AVPUに加え、血糖を必ず測る", d:"GCSまたはAVPUで意識レベルを評価する。原因検索として血糖測定は必須。瞳孔所見・麻痺の有無・痙攣の有無も確認する。"},
+    {t:"E:全身 — 発熱・皮疹・出血・創部・ラインも見る", d:"発熱、皮疹、出血、腹部膨満、下肢浮腫、手術創・ドレーン・点滴ラインの状態など全身をくまなく観察する。"},
+    {t:"評価・検査・治療を並行し、時間軸を意識する", d:"検査結果を待ってから治療を始めるのではなく、評価・検査・治療を同時並行で進める。目安として1分以内に応援とABC評価、5分以内にモニター・酸素・ルート確保・血糖測定、10分以内に原因の仮説形成と検査・初期治療に着手する。"}
+  ];
+
+  var RED_FLAGS = [
+    {t:"反応なし・正常な呼吸なし・脈拍なし/判断に迷う", d:"迷わず胸骨圧迫を開始しAED/除細動器を準備する。心停止時はBLS/ALSのアルゴリズムに従う。"},
+    {t:"発声不能・チョークサイン", d:"窒息を疑い、様子を見ずに背部叩打法・腹部突き上げ法を開始する。"},
+    {t:"SpO2低下+チアノーゼ", d:"高流量酸素をためらわない。原因検索より先に酸素化を優先する。"},
+    {t:"血圧低下+意識障害", d:"ショックとして扱い、原因検索と並行して輸液など初期蘇生を開始する。"},
+    {t:"5分以上持続する痙攣", d:"てんかん重積状態として、経過観察をやめて薬物治療に踏み切る。"}
+  ];
+
+  var COMMON_MISTAKES = [
+    {t:"応援を呼ぶのが遅い", d:"「もう少し自分で」が最も対応を遅らせる。異常に気づいた時点で呼ぶ。"},
+    {t:"血糖を測らない", d:"意識障害・痙攣ではどんな背景の患者でも必ず測定する。"},
+    {t:"呼吸数を見ない", d:"SpO2だけでは呼吸状態の悪化を見逃す。呼吸数は急変時の重要なサイン。"},
+    {t:"モニター装着だけで安心する", d:"数値が出ることと、対応が進んでいることは別。評価と並行して治療を進める。"},
+    {t:"検査結果を待ちすぎる", d:"評価・検査・治療は同時並行が原則。結果を待ってから動き始めない。"},
+    {t:"鑑別を広げすぎて初期治療が遅れる", d:"最初の5〜10分は鑑別を確定させることより、安全に安定化させることを優先する。"},
+    {t:"上級医への報告が遅い", d:"迷った時点、または悪化の兆候を認めた時点で早めに相談する。"},
+    {t:"DNAR=治療しない、と誤解する", d:"DNARは心肺蘇生を行わないことを意味するのみ。酸素投与・輸液など心停止に至る前の治療を差し控える意味ではない。"}
+  ];
+
+  var STORE_KEY = "kyuhen_progress_v1";
+  var DRAFT_KEY = "kyuhen_drafts_v1";
+
+  function loadProgress(){
+    try{
+      var p = JSON.parse(localStorage.getItem(STORE_KEY));
+      return (p && typeof p === "object" && !Array.isArray(p)) ? p : {};
+    }catch(e){ return {}; }
+  }
+  function saveProgress(p){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(p)); return true; }catch(e){ return false; }
+  }
+  function loadDrafts(){
+    try{
+      var d = JSON.parse(localStorage.getItem(DRAFT_KEY));
+      if(!d || typeof d !== "object" || Array.isArray(d)) return {};
+      var clean = {};
+      Object.keys(d).forEach(function(caseId){
+        var entry = d[caseId];
+        if(!entry || typeof entry !== "object" || Array.isArray(entry)) return;
+        var cleanEntry = {};
+        Object.keys(entry).forEach(function(k){
+          if(typeof entry[k] === "string") cleanEntry[k] = entry[k];
+        });
+        clean[caseId] = cleanEntry;
+      });
+      return clean;
+    }catch(e){ return {}; }
+  }
+  function saveDrafts(d){
+    try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); return true; }catch(e){ return false; }
+  }
+
+  (function validateCasesData(){
+    var seenIds = {}, seenNums = {}, ok = true;
+    CASES.forEach(function(c, i){
+      if(!c.id || !c.tag || !c.hint || !c.vignette || !c.data) ok = false;
+      if(seenIds[c.id]) ok = false;
+      seenIds[c.id] = true;
+      if(seenNums[c.num]) ok = false;
+      seenNums[c.num] = true;
+      if(c.num !== i+1) ok = false;
+      if(!c.questions || c.questions.length === 0) ok = false;
+      c.questions && c.questions.forEach(function(q){
+        if(!q.q) ok = false;
+        if(!q.answer || q.answer.length === 0) ok = false;
+        if(!q.mistakes) ok = false;
+      });
+      if(!c.summary || !c.summary.points || c.summary.points.length === 0) ok = false;
+      if(c.summary && c.summary.refs){
+        c.summary.refs.forEach(function(r){
+          if(!r.title) ok = false;
+          if(r.url && r.url.indexOf("http") !== 0) ok = false;
+        });
+      }
+    });
+    if(!ok && typeof console !== "undefined" && console.warn){
+      console.warn("[kyuhen] CASES data integrity check failed: ids/nums are not unique/sequential, a case is missing a required field, a question has no text/answer, a case is missing summary points, or a reference is missing its title / has a malformed url.");
+    }
+  })();
+
+  var state = {
+    view:"home",          // home | case | principles
+    caseId:null,
+    reviewOnly:false,
+    progress: loadProgress()
+  };
+
+  var lastSaveFailed = false;
+
+  var app = document.getElementById("app");
+
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+
+  var VALID_STATUSES = ["good","partial","poor"];
+  function safeStatus(s){
+    return VALID_STATUSES.indexOf(s) !== -1 ? s : "none";
+  }
+
+  function statusLabel(s){
+    if(s==="good") return "自力で言えた";
+    if(s==="partial") return "一部抜けた";
+    if(s==="poor") return "ほぼ言えなかった";
+    return "未挑戦";
+  }
+
+  function caseById(id){
+    for(var i=0;i<CASES.length;i++){ if(CASES[i].id===id) return CASES[i]; }
+    return null;
+  }
+
+  function completedCount(){
+    var n=0;
+    for(var i=0;i<CASES.length;i++){ if(safeStatus(state.progress[CASES[i].id]) !== "none") n++; }
+    return n;
+  }
+  function reviewCases(){
+    return CASES.filter(function(c){
+      var s = state.progress[c.id];
+      return s === "partial" || s === "poor";
+    });
+  }
+
+  function go(view, caseId){
+    state.view = view;
+    state.caseId = caseId || null;
+    render();
+    window.scrollTo(0,0);
+  }
+
+  /* ---------------- RENDER: HOME ---------------- */
+  function renderHome(){
+    var done = completedCount();
+    var total = CASES.length;
+    var rev = reviewCases();
+
+    var subLine;
+    if(done < total){
+      subLine = (total-done)+"症例が未挑戦";
+    } else if(rev.length){
+      subLine = "復習対象が "+rev.length+" 症例あります";
+    } else {
+      subLine = "全症例クリアです";
+    }
+
+    var html = "";
+    html += '<div class="hero">';
+    html += '  <div class="eyebrow">初期研修医のための急変対応</div>';
+    html += '  <h1>院内急変対応<br>トレーニング</h1>';
+    html += '  <p>診断を当てる訓練ではありません。最初の5〜10分を安全に動けることを目的に、答えを見る前に自分の考えを書き出してみましょう。</p>';
+    html += '</div>';
+
+    html += '<div class="progress-card">';
+    html += '  <div class="progress-text"><div class="num">'+done+' / '+total+' 症例 挑戦済み</div><div class="sub">'+subLine+'</div></div>';
+    if(rev.length){
+      html += '  <button class="review-pill-btn" data-action="toggle-review">復習</button>';
+    }
+    html += '</div>';
+
+    html += '<button class="principles-cta" data-action="goto-principles"><span><span class="t">急変対応の型を見る</span><span class="s">応援を呼ぶ→ABCDE評価→評価/検査/治療の並行→SBARで報告</span></span><span class="arrow">›</span></button>';
+
+    if(state.reviewOnly){
+      html += '<div class="section-head"><h2>復習対象の症例</h2><span class="count">'+rev.length+'件</span></div>';
+      if(rev.length===0){
+        html += '<div class="empty-review">復習対象の症例はありません。<br>「一覧」から症例一覧を確認できます。</div>';
+      } else {
+        html += '<div class="case-grid">'+rev.map(caseCardHtml).join("")+'</div>';
+      }
+    } else {
+      html += '<div class="section-head"><h2>症例一覧</h2><span class="count">'+total+'症例</span></div>';
+      html += '<div class="case-grid">'+CASES.map(caseCardHtml).join("")+'</div>';
+    }
+
+    return html;
+  }
+
+  function caseCardHtml(c){
+    var status = safeStatus(state.progress[c.id]);
+    var numStr = (c.num<10?"0":"")+c.num;
+    return '<button class="case-card" data-action="open-case" data-id="'+c.id+'">'+
+      '<span class="case-num">'+numStr+'</span>'+
+      '<span class="case-body"><span class="tag">'+c.tag+'</span><span class="hint">'+c.hint+'</span></span>'+
+      '<span class="status-chip '+status+'">'+statusLabel(status)+'</span>'+
+    '</button>';
+  }
+
+  /* ---------------- RENDER: CASE ---------------- */
+  var revealCache = {}; // caseId -> bool (revealed) — session-only
+  var draftCache = loadDrafts(); // caseId -> {q0,q1,...} — persisted, debounced
+  var pendingStatus = {}; // caseId -> chosen status this session
+
+  function renderCase(c){
+    var html = "";
+    html += '<div class="case-hero"><div class="tag">症例 '+(c.num<10?"0":"")+c.num+'・'+c.tag+'</div><h1>'+c.hint+'</h1></div>';
+    html += '<div class="vignette">'+c.vignette+'<div class="vitals-line"><b>データ　</b>'+c.data+'</div></div>';
+
+    var revealed = !!revealCache[c.id];
+    var drafts = draftCache[c.id] || {};
+
+    html += '<div id="prompts">';
+    c.questions.forEach(function(qq, i){
+      var key = "q"+i;
+      var taId = "ta-"+c.id+"-"+i;
+      html += '<div class="prompt-block">';
+      html += '<label for="'+taId+'"><span class="n">Q'+(i+1)+'.</span>'+qq.q+'</label>';
+      if(!revealed){
+        if(qq.focus){ html += '<div class="q-focus">観点: '+qq.focus+'</div>'; }
+        html += '<textarea id="'+taId+'" data-field="'+key+'" placeholder="自分の考えを書いてみましょう…">'+ (drafts[key] ? escapeHtml(drafts[key]) : "") +'</textarea>';
+      }
+      html += '</div>';
+      if(revealed){
+        html += answerCard(i+1, qq);
+      }
+    });
+    html += '</div>';
+
+    if(draftSaveFailed){
+      html += '<div class="save-warning">⚠ この端末には保存できませんでした。プライベートブラウズ中か、ストレージが無効になっている可能性があります。書いた内容はこの画面を離れると失われます。</div>';
+    }
+
+    if(!revealed){
+      html += '<button class="reveal-btn" data-action="reveal">模範解答を見る</button>';
+    } else {
+      html += renderAnswer(c);
+    }
+
+    return html;
+  }
+
+  function renderAnswer(c){
+    var html = '<div class="answer-wrap">';
+    html += summaryCard(c.summary);
+    html += '</div>';
+
+    html += '<div class="assess-block">';
+    html += '<div class="q">自分の答えと照らし合わせて、自己評価しましょう</div>';
+    var cur = pendingStatus[c.id] || state.progress[c.id] || "";
+    html += '<div class="assess-row">';
+    html += assessBtn("good","自力で言えた", cur);
+    html += assessBtn("partial","一部抜けた", cur);
+    html += assessBtn("poor","ほぼ言えなかった", cur);
+    html += '</div>';
+    if(cur && lastSaveFailed){
+      html += '<div class="save-warning">⚠ この端末には保存できませんでした。プライベートブラウズ中か、ストレージが無効になっている可能性があります。この記録はこの画面を離れると失われます。</div>';
+    }
+    html += '</div>';
+
+    if(cur){
+      html += '<div class="after-assess">';
+      html += '<button class="nav-btn primary" data-action="next-case">次の症例へ</button>';
+      html += '<button class="nav-btn ghost" data-action="goto-home">一覧に戻る</button>';
+      html += '</div>';
+    }
+
+    return html;
+  }
+
+  function answerCard(n, qq){
+    var html = '<div class="answer-card"><h3><span class="ico check">'+n+'</span>設問'+n+'の考え方</h3>';
+    html += '<ul>'+qq.answer.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
+    if(qq.mistakes && qq.mistakes.length){
+      html += '<div class="mistake-box"><b>よくある誤答</b><ul>'+qq.mistakes.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function summaryCard(summary){
+    var html = '<div class="answer-card"><h3><span class="ico sum">✓</span>症例のまとめ</h3>';
+    html += '<ul>'+summary.points.map(function(t){return '<li>'+t+'</li>';}).join("")+'</ul>';
+    if(summary.refs && summary.refs.length){
+      html += '<div class="refs-box"><b>参考文献</b><ol>'+summary.refs.map(refItemHtml).join("")+'</ol></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function refItemHtml(ref){
+    var cite = ref.authors ? (ref.authors + '. ') : "";
+    cite += ref.title + '.';
+    if(ref.source || ref.year){
+      cite += ' <span class="ref-source">' + [ref.source, ref.year].filter(Boolean).join(', ') + '.</span>';
+    }
+    var link = ref.url ? ' <a href="'+ref.url+'" target="_blank" rel="noopener noreferrer">'+ref.url+'</a>' : "";
+    return '<li>' + cite + link + '</li>';
+  }
+
+  function assessBtn(kind, label, cur){
+    return '<button class="assess-btn '+kind+(cur===kind?' active':'')+'" data-action="assess" data-kind="'+kind+'">'+label+'</button>';
+  }
+
+  /* ---------------- RENDER: PRINCIPLES ---------------- */
+  function renderPrinciples(){
+    var html = "";
+    html += '<div class="principles-hero"><div class="eyebrow">急変対応の型</div><h1>まず人を呼ぶ、ABCDEで動く、検査と治療を同時進行する</h1><p>鑑別を当てることより、この8ステップを体に染み込ませて最初の5〜10分を安全に動くことを優先しましょう。</p></div>';
+    html += '<div class="escalation-note"><div class="en-label">🚨 評価より先に、直ちに動くべき状況</div><div class="en-body">'+
+      'これらのサインを見たら、丁寧な評価より先に該当する初動を行う。<ul>'+
+      RED_FLAGS.map(function(f){ return '<li><mark>'+f.t+'</mark>: '+f.d+'</li>'; }).join('') +
+      '</ul></div></div>';
+    html += '<div class="flow">';
+    PRINCIPLES.forEach(function(f,i){
+      html += '<div class="flow-step">';
+      html += '<div class="rail"><div class="node">'+(i+1)+'</div>'+(i<PRINCIPLES.length-1?'<div class="stem"></div>':'')+'</div>';
+      html += '<div class="content"><h3>'+f.t+'</h3><p>'+f.d+'</p></div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<div class="escalation-note"><div class="en-label">✋ 急変対応でありがちな失敗</div><div class="en-body">'+
+      'どれも「わかっているつもり」で繰り返されやすい落とし穴。<ul>'+
+      COMMON_MISTAKES.map(function(f){ return '<li><mark>'+f.t+'</mark>: '+f.d+'</li>'; }).join('') +
+      '</ul></div></div>';
+    html += '<div class="escalation-note"><div class="en-label">📣 上級医への報告はSBARで</div><div class="en-body">'+
+      '<ul>'+
+      '<li><mark>S(Situation)</mark>: 今、何が起きているか</li>'+
+      '<li><mark>B(Background)</mark>: そこに至る経緯・患者情報</li>'+
+      '<li><mark>A(Assessment)</mark>: 現在のABCDE・バイタル、自分はどう考えているか</li>'+
+      '<li><mark>R(Recommendation)</mark>: どうしてほしいか</li>'+
+      '</ul>'+
+      '例:「肺炎入院中の80歳、BP 70/40、HR 120、SpO2 90% room air、意識低下あり。酸素投与・ルート確保中です」のように、具体的な数値とすでに行った対応を添えて伝える。'+
+      '</div></div>';
+    html += '<div class="principles-foot">急変対応のゴールは診断を確定することではなく、患者をこれ以上悪くさせず、次の適切な場所・人につなぐことである。</div>';
+    return html;
+  }
+
+  /* ---------------- MASTER RENDER ---------------- */
+  function render(){
+    var topbarHtml, mainHtml;
+
+    if(state.view==="home"){
+      topbarHtml = state.reviewOnly
+        ? '<button class="back" data-action="goto-home-full">‹ 一覧</button><div class="title">復習リスト</div>'
+        : '<div class="title">院内急変対応トレーニング</div>';
+      mainHtml = renderHome();
+    } else if(state.view==="case"){
+      var c = caseById(state.caseId);
+      if(!c){
+        state.view = "home";
+        state.caseId = null;
+        return render();
+      }
+      var numStr = (c.num<10?"0":"")+c.num;
+      topbarHtml = '<button class="back" data-action="goto-home">‹ 一覧</button><div class="title">症例 '+numStr+'</div>';
+      mainHtml = renderCase(c);
+    } else if(state.view==="principles"){
+      topbarHtml = '<button class="back" data-action="goto-home">‹ 一覧</button><div class="title">急変対応の型</div>';
+      mainHtml = renderPrinciples();
+    }
+
+    app.innerHTML = '<div class="topbar">'+topbarHtml+'</div><main>'+mainHtml+'</main>';
+    bindEvents();
+  }
+
+  /* ---------------- EVENTS ---------------- */
+  function nextCaseAfter(current){
+    var pool = state.reviewOnly ? reviewCases() : CASES;
+    if(pool.length === 0){ pool = CASES; }
+    var idx = -1;
+    for(var i=0;i<pool.length;i++){ if(pool[i].id===current.id){ idx = i; break; } }
+    return idx === -1 ? pool[0] : pool[(idx+1) % pool.length];
+  }
+
+  function bindEvents(){
+    app.querySelectorAll("[data-action]").forEach(function(el){
+      el.addEventListener("click", function(){
+        var action = el.getAttribute("data-action");
+        if(action==="open-case"){
+          revealCache[el.getAttribute("data-id")] = false;
+          delete pendingStatus[el.getAttribute("data-id")];
+          lastSaveFailed = false;
+          draftSaveFailed = false;
+          go("case", el.getAttribute("data-id"));
+        } else if(action==="goto-home"){
+          go("home");
+        } else if(action==="goto-home-full"){
+          state.reviewOnly = false;
+          render();
+        } else if(action==="toggle-review"){
+          state.reviewOnly = true;
+          render();
+        } else if(action==="goto-principles"){
+          go("principles");
+        } else if(action==="reveal"){
+          collectDraft(state.caseId, true);
+          revealCache[state.caseId] = true;
+          render();
+          var firstAnswer = app.querySelector(".answer-card");
+          if(firstAnswer) firstAnswer.scrollIntoView({behavior:"smooth", block:"start"});
+        } else if(action==="assess"){
+          var kind = el.getAttribute("data-kind");
+          var c0 = caseById(state.caseId);
+          if(!c0) return;
+          pendingStatus[state.caseId] = kind;
+          state.progress[state.caseId] = kind;
+          lastSaveFailed = !saveProgress(state.progress);
+          render();
+        } else if(action==="next-case"){
+          var c = caseById(state.caseId);
+          if(!c) return;
+          var next = nextCaseAfter(c);
+          revealCache[next.id] = false;
+          delete pendingStatus[next.id];
+          go("case", next.id);
+        }
+      });
+    });
+
+    app.querySelectorAll("textarea[data-field]").forEach(function(ta){
+      ta.addEventListener("input", function(){
+        collectDraft(state.caseId, false);
+      });
+    });
+  }
+
+  var draftSaveTimer = null;
+  var draftSaveFailed = false;
+
+  function persistDrafts(){
+    var onDisk = loadDrafts();
+    var merged = {};
+    Object.keys(onDisk).forEach(function(id){ merged[id] = onDisk[id]; });
+    Object.keys(draftCache).forEach(function(id){ merged[id] = draftCache[id]; });
+    draftSaveFailed = !saveDrafts(merged);
+    return merged;
+  }
+
+  function collectDraft(caseId, flushNow){
+    var d = {};
+    app.querySelectorAll("textarea[data-field]").forEach(function(ta){
+      d[ta.getAttribute("data-field")] = ta.value;
+    });
+    draftCache[caseId] = d;
+    if(draftSaveTimer){ clearTimeout(draftSaveTimer); draftSaveTimer = null; }
+    if(flushNow){
+      persistDrafts();
+    } else {
+      draftSaveTimer = setTimeout(persistDrafts, 400);
+    }
+  }
+  window.addEventListener("pagehide", persistDrafts);
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "hidden") persistDrafts();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
