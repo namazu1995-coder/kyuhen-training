@@ -1337,13 +1337,6 @@
         } else if(action==="goto-principles"){
           go("principles");
         } else if(action==="reveal"){
-          var allBlank = true;
-          app.querySelectorAll("textarea[data-field]").forEach(function(ta){
-            if(ta.value.trim() !== "") allBlank = false;
-          });
-          if(allBlank && !window.confirm("まだ何も書いていません。自分で考える前に模範解答を見てしまうと、練習の効果が薄くなります。それでも見ますか?")){
-            return;
-          }
           collectDraft(state.caseId, true);
           revealCache[state.caseId] = true;
           render();
