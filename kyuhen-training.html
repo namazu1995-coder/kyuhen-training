@@ -26,6 +26,10 @@
     --warn-tint:#FBEDDA;
     --bad:#B23A3A;
     --bad-tint:#FBE7E5;
+    --on-primary:#fff;
+    --on-good:#fff;
+    --on-warn:#fff;
+    --on-bad:#fff;
     --shadow: 0 1px 2px rgba(33,20,22,.06), 0 6px 20px rgba(33,20,22,.05);
   }
   @media (prefers-color-scheme: dark){
@@ -48,6 +52,10 @@
       --warn-tint:#33260F;
       --bad:#E27C7C;
       --bad-tint:#3A1B1B;
+      --on-primary:#2E0A14;
+      --on-good:#0B2024;
+      --on-warn:#2B1B08;
+      --on-bad:#3A0F0F;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
     }
   }
@@ -70,6 +78,10 @@
     --warn-tint:#33260F;
     --bad:#E27C7C;
     --bad-tint:#3A1B1B;
+    --on-primary:#2E0A14;
+    --on-good:#0B2024;
+    --on-warn:#2B1B08;
+    --on-bad:#3A0F0F;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   }
 
@@ -216,7 +228,7 @@
 
   .reveal-btn{
     width:100%; margin-top:24px; appearance:none; border:none; cursor:pointer;
-    background:var(--primary); color:#fff; font-weight:700; font-size:15px;
+    background:var(--primary); color:var(--on-primary); font-weight:700; font-size:15px;
     padding:15px; border-radius:14px; font-family:inherit;
     box-shadow:0 4px 14px rgba(140,31,63,.28);
     min-height:44px;
@@ -234,10 +246,10 @@
   }
   .answer-card h3 .ico{
     width:22px;height:22px;border-radius:7px;flex:none; display:flex;align-items:center;justify-content:center;
-    font-size:12px; font-weight:900; color:#fff;
+    font-size:12px; font-weight:900;
   }
-  .ico.check{background:var(--primary);}
-  .ico.sum{background:var(--accent);}
+  .ico.check{background:var(--primary); color:var(--on-primary);}
+  .ico.sum{background:var(--accent); color:var(--on-warn);}
   .answer-card ul{ margin:0; padding-left:20px; font-size:14px; color:var(--ink); }
   .answer-card li{ margin-bottom:6px; }
   .answer-card li:last-child{ margin-bottom:0; }
@@ -274,9 +286,9 @@
   .assess-btn.good{ border-color:var(--good); }
   .assess-btn.partial{ border-color:var(--warn); }
   .assess-btn.poor{ border-color:var(--bad); }
-  .assess-btn.good.active{ background:var(--good); color:#fff; }
-  .assess-btn.partial.active{ background:var(--warn); color:#fff; }
-  .assess-btn.poor.active{ background:var(--bad); color:#fff; }
+  .assess-btn.good.active{ background:var(--good); color:var(--on-good); }
+  .assess-btn.partial.active{ background:var(--warn); color:var(--on-warn); }
+  .assess-btn.poor.active{ background:var(--bad); color:var(--on-bad); }
   .save-warning{
     margin-top:12px; padding:10px 14px; border-radius:10px;
     background:var(--bad-tint); color:var(--bad); font-size:12.5px; font-weight:600; line-height:1.5;
@@ -292,7 +304,7 @@
     font-family:inherit; font-size:14.5px; font-weight:700; text-align:center;
     min-height:44px;
   }
-  .nav-btn.primary{ background:var(--primary); color:#fff; }
+  .nav-btn.primary{ background:var(--primary); color:var(--on-primary); }
   .nav-btn.ghost{ background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--line); }
 
   /* ---------- PRINCIPLES VIEW ---------- */
@@ -317,7 +329,7 @@
   .flow-step:last-child{ padding-bottom:0; }
   .flow-step .rail{ display:flex; flex-direction:column; align-items:center; flex:none; }
   .flow-step .node{
-    width:32px; height:32px; border-radius:50%; background:var(--primary); color:#fff;
+    width:32px; height:32px; border-radius:50%; background:var(--primary); color:var(--on-primary);
     display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px;
     font-family:"Zen Kaku Gothic New",sans-serif; flex:none; z-index:1;
   }
@@ -387,7 +399,7 @@
         },
         {
           q:"このバイタル変化から考えるべき病態は何か。原因検索としてどのような検査・測定を進めるか。",
-          focus:"敗血症を疑う根拠 ・ qSOFAの位置づけ ・ 進めるべき検査",
+          focus:"バイタル変化から考えるべき病態 ・ qSOFAの位置づけ ・ 進めるべき検査",
           answer:[
             "肺炎治療中の患者における急激な血圧低下・意識変容・頻呼吸・頻脈は<mark>敗血症性ショック</mark>を積極的に疑う所見",
             "<mark>qSOFA(呼吸数≧22/分、収縮期血圧≦100mmHg、意識変容)</mark>の3項目すべてに該当しており、感染症を背景とした重篤な状態を強く示唆する",
@@ -462,7 +474,7 @@
         },
         {
           q:"この病歴・所見から考えるべき鑑別診断は何か。特に見逃してはいけない疾患とその根拠、行うべき検査は何か。",
-          focus:"急性肺血栓塞栓症を疑う根拠 ・ 検査前確率評価 ・ 確認すべき検査",
+          focus:"この病歴・所見の組み合わせから考えるべき鑑別 ・ 検査前確率評価 ・ 確認すべき検査",
           answer:[
             "術後臥床(不動化)+突然発症の呼吸困難・低酸素・頻脈+下腿腫脹という組み合わせは<mark>急性肺血栓塞栓症</mark>を強く疑わせる",
             "Wells scoreなどの<mark>臨床的検査前確率評価ツール</mark>を用いて評価する。検査前確率が高い場合、D-dimer陰性でも肺塞栓を否定できない点に注意する",
@@ -682,7 +694,7 @@
         },
         {
           q:"この病歴・所見から考えるべき鑑別診断は何か。確認すべき検査は何か。",
-          focus:"急性冠症候群を疑う根拠 ・ 見逃してはいけない他の鑑別",
+          focus:"この病歴・所見の組み合わせから考えるべき鑑別 ・ 見逃してはいけない他の鑑別",
           answer:[
             "術後(周術期)の患者における突然発症の胸痛・冷汗・血圧低下・徐脈/不整脈という組み合わせは<mark>急性冠症候群(特にST上昇型心筋梗塞)</mark>を強く疑う",
             "他に<mark>肺血栓塞栓症、大動脈解離、緊張性気胸、心タンポナーデ</mark>も鑑別に挙がるため、12誘導心電図に加え、<mark>血圧の左右差(大動脈解離を示唆)、呼吸音の左右差(気胸を示唆)、頸静脈怒張・心音減弱・奇脈(Beck三徴、心タンポナーデを示唆)</mark>の有無も併せて評価する。いずれも所見が乏しいからといってその場で完全に否定はできない",
@@ -730,7 +742,7 @@
       }
     },
     {
-      id:"airway", num:6, tag:"気道緊急",
+      id:"airway", num:6, tag:"気道異物",
       hint:"84歳男性・嚥下機能低下・食事中の突然のむせ込みと発声不能",
       vignette:"84歳男性。脳梗塞後遺症で嚥下機能がやや低下しているが経口摂取していた。昼食中に急にむせ込み、その後声が出せず、両手で首をつかむ仕草をした。付き添いの看護師がすぐに気づいた。",
       data:"意識清明・強い苦悶様表情／発声不能、咳嗽も弱く効果的でない／顔面〜口唇にかけてチアノーゼが出現しつつある／体動のためSpO2測定できず",
@@ -982,28 +994,43 @@
       return (p && typeof p === "object" && !Array.isArray(p)) ? p : {};
     }catch(e){ return {}; }
   }
-  function saveProgress(p){
-    try{ localStorage.setItem(STORE_KEY, JSON.stringify(p)); return true; }catch(e){ return false; }
+  // Read-merge-write, scoped to the single case that changed: writing a wholesale
+  // snapshot (or merging an entire in-memory cache over disk) can clobber a concurrent
+  // tab's newer write to an unrelated case.
+  function saveProgress(caseId, status){
+    try{
+      var current = loadProgress();
+      current[caseId] = status;
+      localStorage.setItem(STORE_KEY, JSON.stringify(current));
+      state.progress = current;
+      return true;
+    }catch(e){ return false; }
   }
   function loadDrafts(){
     try{
-      var d = JSON.parse(localStorage.getItem(DRAFT_KEY));
-      if(!d || typeof d !== "object" || Array.isArray(d)) return {};
-      var clean = {};
-      Object.keys(d).forEach(function(caseId){
-        var entry = d[caseId];
+      var raw = JSON.parse(localStorage.getItem(DRAFT_KEY));
+      if(!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+      var out = {};
+      CASES.forEach(function(c){
+        var entry = raw[c.id];
         if(!entry || typeof entry !== "object" || Array.isArray(entry)) return;
-        var cleanEntry = {};
+        var clean = {};
         Object.keys(entry).forEach(function(k){
-          if(typeof entry[k] === "string") cleanEntry[k] = entry[k];
+          if(typeof entry[k] === "string") clean[k] = entry[k];
         });
-        clean[caseId] = cleanEntry;
+        if(Object.keys(clean).length) out[c.id] = clean;
       });
-      return clean;
+      return out;
     }catch(e){ return {}; }
   }
-  function saveDrafts(d){
-    try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); return true; }catch(e){ return false; }
+  function saveDrafts(caseId, fields){
+    try{
+      var current = loadDrafts();
+      current[caseId] = fields;
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(current));
+      draftCache = current;
+      return true;
+    }catch(e){ return false; }
   }
 
   (function validateCasesData(){
@@ -1348,8 +1375,7 @@
           var c0 = caseById(state.caseId);
           if(!c0) return;
           pendingStatus[state.caseId] = kind;
-          state.progress[state.caseId] = kind;
-          lastSaveFailed = !saveProgress(state.progress);
+          lastSaveFailed = !saveProgress(state.caseId, kind);
           render();
         } else if(action==="next-case"){
           var c = caseById(state.caseId);
@@ -1374,15 +1400,6 @@
   var draftSaveTimer = null;
   var draftSaveFailed = false;
 
-  function persistDrafts(){
-    var onDisk = loadDrafts();
-    var merged = {};
-    Object.keys(onDisk).forEach(function(id){ merged[id] = onDisk[id]; });
-    Object.keys(draftCache).forEach(function(id){ merged[id] = draftCache[id]; });
-    draftSaveFailed = !saveDrafts(merged);
-    return merged;
-  }
-
   function collectDraft(caseId, flushNow){
     var d = {};
     app.querySelectorAll("textarea[data-field]").forEach(function(ta){
@@ -1391,14 +1408,19 @@
     draftCache[caseId] = d;
     if(draftSaveTimer){ clearTimeout(draftSaveTimer); draftSaveTimer = null; }
     if(flushNow){
-      persistDrafts();
+      draftSaveFailed = !saveDrafts(caseId, d);
     } else {
-      draftSaveTimer = setTimeout(persistDrafts, 400);
+      draftSaveTimer = setTimeout(function(){ draftSaveFailed = !saveDrafts(caseId, d); }, 400);
     }
   }
-  window.addEventListener("pagehide", persistDrafts);
+  function flushCurrentDraft(){
+    if(state.view === "case" && state.caseId && draftCache[state.caseId]){
+      saveDrafts(state.caseId, draftCache[state.caseId]);
+    }
+  }
+  window.addEventListener("pagehide", flushCurrentDraft);
   document.addEventListener("visibilitychange", function(){
-    if(document.visibilityState === "hidden") persistDrafts();
+    if(document.visibilityState === "hidden") flushCurrentDraft();
   });
 
   render();
